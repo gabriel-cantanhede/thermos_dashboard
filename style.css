@@ -1,0 +1,82 @@
+/* Logo */
+/* Suggested by Michael Hollander -> https://discuss.streamlit.io/t/st-logo-image-size/71085/6*/
+img[data-testid="stLogo"] {
+    height: 3rem;
+}
+/*img.stLogo.st-emotion-cache-173tlbm.eczjsme7 {
+    background-image: url(https://grupoequatorialenergia-my.sharepoint.com/:i:/r/personal/gabriel_cantanhede_equatorialenergia_com_br/Documents/logo_azul.png?csf=1&web=1&e=qynVhY);
+    background-image: url(../assets/logo_azul.png);
+    background-size: 200px;
+    background-repeat: no-repeat;
+    background-position: 4px 20px;
+}*/
+
+/* Vertical Block - Streamlit */
+
+/*
+div.stVerticalBlock.st-emotion-cache-1n76uvr.e1f1d6gn2 {
+    border: 1px solid #0901ff;
+    border-radius: 8px;
+    padding: 5 5 5 5;
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15) !important;
+}*/
+
+/* Card */
+/* Adapted from https://startbootstrap.com/theme/sb-admin-2 */
+div.css-1r6slb0.e1tzin5v2 {
+background-color: #83ecfe;
+border: 1px solid #c6c9fd;
+padding: 5% 5% 5% 10%;
+border-radius: 5px;
+
+border-left: 0.5rem solid #1a008e !important;
+box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15) !important;
+
+}
+/* Navi Buttons */
+a[data-testid="stPageLink-NavLink"]{
+    background-color: #f7f7f7;
+    border: 1px solid #0901ff;
+    border-radius: 8px;
+    padding: 1% 40% 1% 40%;
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15) !important;
+}
+
+/* Disabled Navi Buttons */
+a.st-emotion-cache-u9ybrz.e11k5jya1{
+    background-color: #e6e6e6;
+    border: 1px solid #848484;
+    border-radius: 8px;
+    padding: 1% 40% 1% 40%;
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15) !important;
+}
+
+label.css-mkogse.e16fv1kl2 {
+color: #36b9cc !important;
+font-weight: 700 !important;
+text-transform: uppercase !important;
+}
+
+
+/* Move block container higher */
+div.block-container.css-18e3th9.egzxvld2 {
+margin-top: -5em;
+}
+
+
+/* Hide hamburger menu and footer */
+div.css-r698ls.e8zbici2 {
+display: none;
+}
+
+footer.css-ipbk5a.egzxvld4 {
+display: none;
+}
+
+footer.css-12gp8ed.eknhn3m4 {
+display: none;
+}
+
+div.vg-tooltip-element {
+display: none;
+}
