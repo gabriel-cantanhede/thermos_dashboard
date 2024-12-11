@@ -39,6 +39,7 @@ def run_insert(_conn, _table_name, values):
 def load_data(_conn, view_name):
     response = _conn.table(view_name).select('*').execute()
     df_response = pd.DataFrame(response.data[:])
+    df_response['dia'] = pd.to_datetime(df_response['dia']).dt.date.astype('datetime64[ns]')
     return df_response
 
 
