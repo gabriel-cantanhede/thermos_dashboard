@@ -1,22 +1,19 @@
 import streamlit as st
 
-#curr_path = os.getcwd()
-#img_name = "eqtlogo_white.png"
-#full_path = os.path.join(curr_path, img_name)
-#print(full_path)
-#st.logo("https://grupoequatorialenergia-my.sharepoint.com/:i:/r/personal/gabriel_cantanhede_equatorialenergia_com_br/Documents/logo_azul.png?csf=1&web=1&e=PBcUzk")
-#st.logo("https://grupoequatorialenergia-my.sharepoint.com/:i:/r/personal/gabriel_cantanhede_equatorialenergia_com_br/Documents/logo_branco.png?csf=1&web=1&e=5NLcWc")
+st.logo("https://www.equatorialenergia.com.br/wp-content/themes/equatorial-energia-child/img/logo-blue.png")
 
-st.set_page_config(layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(layout="wide", initial_sidebar_state="collapsed")
 
 with open('style.css') as f:
     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
 pages = {
     "Páginas":[
-        st.Page("./views/single_selection.py", title="Visão Básica",),
-        st.Page("./views/full_selection.py", title="Visão Completa", default=True),
-        #st.Page("./views/stakeholder_selection.py", title="Visão Completa", default=True),
+        st.Page("./views/landing_page.py", title="Informe Reputacional Automático", default=True),
+        st.Page("./views/user_login.py", title="Login de Usuário"),
+        st.Page("./views/dash.py", title="Dashboard"),
+        st.Page("./views/view_group.py", title="Visão Grupo"),
+        st.Page("./views/view_states.py", title="Visão Estados"),
     ]}
 
 pg = st.navigation(pages)
