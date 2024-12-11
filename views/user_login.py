@@ -24,10 +24,10 @@ if curr_user:
     #### Navigation buttons ###
     # st.markdown("-----")
     nav_prev_logged, nav_next_logged = st.columns(2, vertical_alignment='bottom')
-    with nav_prev_logged:
-        st.page_link("views/landing_page.py", label="Voltar")
+    # with nav_prev_logged:
+    #     st.page_link("views/landing_page.py", label="Voltar")
     with nav_next_logged:
-        st.page_link("views/digital_mentions_page.py", label="Avançar",)
+        st.page_link("views/dash.py", label="Avançar",)
 
 else:
     #######

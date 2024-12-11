@@ -25,9 +25,19 @@ df_response = dbc.load_data(conn, view_choice)
 
 # Prepping tables and values to build visualizations
 df_big_numbers = df_response[['dia', 'favorabilidade', 'saudabilidade', 'reputacao']].copy()
+## Reputation
 today_rep = df_big_numbers.iloc[0]['reputacao']
 yesterday_rep = df_big_numbers.iloc[1]['reputacao']
 color_today_rep = misc.pick_color(today_rep/100)
+## Favorability
+today_fav = df_big_numbers.iloc[0]['favorabilidade']
+yesterday_fav = df_big_numbers.iloc[1]['favorabilidade']
+color_today_fav = misc.pick_color(today_fav/100)
+## Saudability
+today_saud = df_big_numbers.iloc[0]['saudabilidade']
+yesterday_saud = df_big_numbers.iloc[1]['saudabilidade']
+color_today_saud = misc.pick_color(today_saud/100)
+
 
 #### Visualizations 
 
@@ -35,15 +45,38 @@ color_today_rep = misc.pick_color(today_rep/100)
 with st.container(border=True):
     #### Visualizations 
     ### Line chart showing the trends for overall favorability over the year
-    fig_line = px.line(
-        df_big_numbers,
-        x='dia',
-        y=['reputacao', 'favorabilidade', 'saudabilidade'],
-        labels=dict(variable="KPI",value="Valor", dia="Dia", reputacao="Reputação"),
-        hover_data={"dia": "|%m-%d-%Y"},
-        color_discrete_sequence=['blue', 'green', 'orange'],
-        )
-        # text='reputacao')
+    fig_line = go.Figure(go.Scatter(
+        x= df_big_numbers['dia'],
+        y= df_big_numbers['reputacao'],
+        # color=df_big_numbers['reputacao'],
+        name='Reputação',
+        mode='lines',
+        line=dict(color='blue', width=4, dash='solid'),
+        legendgroup= 'group 1',
+        zorder=0,
+        ))
+
+    fig_line.add_trace(go.Scatter(
+        x= df_big_numbers['dia'],
+        y= df_big_numbers['favorabilidade'],
+        # color=df_big_numbers['reputacao'],
+        name='Favorabilidade',
+        mode='lines',
+        line=dict(color='orange', width=2, dash='solid'),
+        legendgroup= 'group 1',
+        zorder=1,
+        ))
+
+    fig_line.add_trace(go.Scatter(
+        x= df_big_numbers['dia'],
+        y= df_big_numbers['saudabilidade'],
+        # color=df_big_numbers['reputacao'],
+        name='Saudabilidade',
+        mode='lines',
+        line=dict(color='green', width=2, dash='solid'),
+        legendgroup= 'group 1',
+        zorder=2,
+        ))
 
     count_days = df_big_numbers['dia'].count()
 
@@ -53,7 +86,9 @@ with st.container(border=True):
                             legendgroup='group2', 
                             mode='lines',
                             name='Média', 
-                            line=dict(color='gold', width=4, dash='dashdot')))
+                            line=dict(color='gold', width=4, dash='dashdot'),
+                            zorder=3,
+                            ))
     fig_line.add_trace(go.Scatter(
                             x=df_big_numbers['dia'], 
                             y=[35] * count_days,
@@ -61,14 +96,16 @@ with st.container(border=True):
                             legendgrouptitle_text='Referência',
                             mode='lines',
                             name='Baixa', 
-                            line=dict(color='red', width=4, dash='dashdot')))
+                            line=dict(color='red', width=4, dash='dashdot'),
+                            zorder=4,
+                            ))
 
 
     name_viz = "Reputação do grupo nos últimos 15 dias" if view_choice == 'reputacao_grupo_15dias' else "Reputação do Grupo"
-    st.subheader(name_viz)
+    st.header(name_viz)
     fig_line.update_layout(
         # title={"text":name_viz},
-        legend_title_text='KPIs',
+        legend_title_text='Indicadores',
         autosize=True,
         # width=800,
         # height=600,
@@ -109,41 +146,131 @@ with st.container(border=True):
                         step="all")
                 ])
             ),
+            # This is the bit that adds the bottom date range slicing widget
             # It's cluttering the visuals a bit, uncomment if deemed necessary
             # rangeslider=dict(
             #     visible=True
             # ),
             type="date"
         ))
+    # Reversing the trace order, for viz purposes
+    # fig_line = fig_line.select_traces[:-1]
 
     st.plotly_chart(fig_line)
 
 
 
 with st.container(border=True):
-    st.subheader("Reputação (hoje vs. ontem)")
-    fig_today = go.Figure(go.Indicator(
-        mode = "number+gauge+delta", value = today_rep,
-        domain = {'x': [0.1, 1], 'y': [0, 1]},
-        # title = {'text' :"<b>Reputação<br> (hoje <br>vs. <br>ontem)</b> ", 'font':{'size':20}},
-        delta = {'reference': yesterday_rep, "valueformat":'.2'},
-        number = {'suffix':'%','font':{'size':60}, 'font':{'color':color_today_rep}},
-        gauge = {
-            'shape': "bullet",
-            'axis': {'range': [None, 100]},
-            # 'threshold': {
-            #     'line': {'color': "black", 'width': 2},
-            #     'thickness': 0.75,
-            #     'value': yesterday_fav},
-            'steps': [
-                {'range': [0, 35], 'color': "#F58A67"},
-                {'range': [35, 70], 'color': "#F0D16E"},
-                {'range': [70, 100], 'color': "#89F067"},
-                ],
-            'bar': {'color': color_today_rep, 'thickness':0.5, 'line':{'color':'black', 'width':1}}
-                }))
-    fig_today.update_layout(height = 300, width=1000)
-    st.plotly_chart(fig_today)    
+    st.markdown('## Indicadores do dia')
+    col_rep, col_fav_saud = st.columns([0.5, 0.5], gap='small', vertical_alignment='center')
+    ## Reputation Gauge
+    with col_rep:
+        # st.markdown("### Reputação <br>(hoje vs. ontem)",unsafe_allow_html=True)
+        fig_today_rep = go.Figure(go.Indicator(
+            mode = "number+gauge+delta", value = today_rep,
+            domain = {'x': [0.1, 1], 'y': [0, 1]},
+            # title = {'text' :"<b>Reputação<br> (hoje <br>vs. <br>ontem)</b> ", 'font':{'size':20}},
+            delta = {'reference': yesterday_rep, "valueformat":'.2'},
+            number = {'suffix':'%','font':{'size':60}, 'font':{'color':color_today_rep}},
+            gauge = {
+                'shape': "bullet",
+                'axis': {'range': [None, 100]},
+                # 'threshold': {
+                #     'line': {'color': "black", 'width': 2},
+                #     'thickness': 0.75,
+                #     'value': yesterday_fav},
+                'steps': [
+                    {'range': [0, 35], 'color': "#F58A67"},
+                    {'range': [35, 70], 'color': "#F0D16E"},
+                    {'range': [70, 100], 'color': "#89F067"},
+                    ],
+                'bar': {'color': color_today_rep, 'thickness':0.5, 'line':{'color':'black', 'width':1}}
+                    }))
+        fig_today_rep.update_layout(
+            height = 280,
+            width=1000,
+            title=dict(
+                text='Reputação <br>(hoje vs. ontem)',
+                automargin=True,
+                font=dict(color='darkblue', size=25),
+                x=0.45,
+                y=0.9,
+                xanchor='center',
+                yanchor='top',
+                ))
+        st.plotly_chart(fig_today_rep)
 
+    ## Favorability Gauge  
+    with col_fav_saud:
+        # st.subheader("Favorabilidade")
+        fig_today_fav = go.Figure(go.Indicator(
+            mode = "number+gauge+delta", value = today_fav,
+            domain = {'x': [0.1, 1], 'y': [0, 1]},
+            # title = {'text' :"<b>Reputação<br> (hoje <br>vs. <br>ontem)</b> ", 'font':{'size':20}},
+            delta = {'reference': yesterday_fav, "valueformat":'.2'},
+            number = {'suffix':'%','font':{'size':60}, 'font':{'color':color_today_fav}},
+            gauge = {
+                'shape': "bullet",
+                'axis': {'range': [None, 100]},
+                # 'threshold': {
+                #     'line': {'color': "black", 'width': 2},
+                #     'thickness': 0.75,
+                #     'value': yesterday_fav},
+                'steps': [
+                    {'range': [0, 35], 'color': "#F58A67"},
+                    {'range': [35, 70], 'color': "#F0D16E"},
+                    {'range': [70, 100], 'color': "#89F067"},
+                    ],
+                'bar': {'color': color_today_fav, 'thickness':0.5, 'line':{'color':'black', 'width':1}}
+                    }))
+        fig_today_fav.update_layout(
+            height = 250,
+            width=1000,
+            title=dict(
+                text='Favorabilidade',
+                automargin=True,
+                font=dict(color='darkblue', size=25),
+                x=0.45,
+                y=0.9,
+                xanchor='center',
+                yanchor='top',
+                ))
+
+        # "# st.subheader("Saudabilidade")
+        fig_today_saud = go.Figure(go.Indicator(
+            mode = "number+gauge+delta", value = today_saud,
+            domain = {'x': [0.1, 1], 'y': [0, 1]},
+            # title = {'text' :"<b>Reputação<br> (hoje <br>vs. <br>ontem)</b> ", 'font':{'size':20}},
+            delta = {'reference': yesterday_saud, "valueformat":'.2'},
+            number = {'suffix':'%','font':{'size':60}, 'font':{'color':color_today_saud}},
+            gauge = {
+                'shape': "bullet",
+                'axis': {'range': [None, 100]},
+                # 'threshold': {
+                #     'line': {'color': "black", 'width': 2},
+                #     'thickness': 0.75,
+                #     'value': yesterday_fav},
+                'steps': [
+                    {'range': [0, 35], 'color': "#F58A67"},
+                    {'range': [35, 70], 'color': "#F0D16E"},
+                    {'range': [70, 100], 'color': "#89F067"},
+                    ],
+                'bar': {'color': color_today_saud, 'thickness':0.5, 'line':{'color':'black', 'width':1}}
+                    }))
+        fig_today_saud.update_layout(
+            height= 250,
+            width= 1000,
+            title=dict(
+                text='Saudabilidade',
+                automargin=True,
+                font=dict(color='darkblue', size=25),
+                x=0.45,
+                y=0.9,
+                xanchor='center',
+                yanchor='top',)
+                )
+        
+        st.plotly_chart(fig_today_fav)
+        st.plotly_chart(fig_today_saud)    
 
 # st.dataframe(df_data_thermos)
