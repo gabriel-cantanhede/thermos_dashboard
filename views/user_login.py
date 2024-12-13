@@ -22,12 +22,10 @@ if curr_user:
         st.markdown("#### Prossiga para a próxima página ->")
 
     #### Navigation buttons ###
-    # st.markdown("-----")
-    nav_prev_logged, nav_next_logged = st.columns(2, vertical_alignment='bottom')
-    # with nav_prev_logged:
-    #     st.page_link("views/landing_page.py", label="Voltar")
-    with nav_next_logged:
-        st.page_link("views/dash.py", label="Avançar",)
+    with st.container():
+        _, _, nav_next_logged = st.columns([0.4,0.2,0.4], vertical_alignment='bottom')
+        with nav_next_logged:
+            st.page_link("views/dash.py", label="Avançar 	:arrow_right:",)
 
 else:
     #######
@@ -47,13 +45,10 @@ else:
                 st.write(f"## Bem vindo(a), :blue[{response.user.user_metadata["first_name"]}]!")
                 
                 #### Navigation buttons ###
-                # st.markdown("-----")
-                nav_prev, nav_next = st.columns(2, vertical_alignment='bottom')
-                # with nav_prev:
-                #     st.page_link("views/landing_page.py", label="Voltar")
-                with nav_next:
-                    st.page_link("views/dash.py", label="Avançar",)
-
+                with st.container():
+                    _, _, nav_next = st.columns([0.4,0.2,0.4], vertical_alignment='bottom')
+                    with nav_next:
+                        st.page_link("views/user_login.py", label="Avançar 	:arrow_right:",)
                 
             except AuthApiError as auth_error:
                 st.error("Erro ao tentar fazer login. Por favor, tente novamente.")   

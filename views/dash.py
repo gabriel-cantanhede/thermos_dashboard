@@ -276,7 +276,16 @@ try:
                 xanchor='center',
                 yanchor='top',
                 ))
-        st.plotly_chart(fig_today_rep)   
+        st.plotly_chart(fig_today_rep)
+    
+    ### Navigation Buttons
+    with st.container():
+        nav_prev, _, nav_next = st.columns([0.4,0.2,0.4], vertical_alignment='bottom')
+        # with nav_prev:
+        #     st.page_link("views/dash.py", label=":arrow_left: Voltar",)
+        with nav_next:
+            st.page_link("views/view_group.py", label="Avançar :arrow_right:",)
+
 except Exception as e:
     st.error("Falha ao recuperar dados do termômetro, tente logar novamente.")
     time.sleep(5)

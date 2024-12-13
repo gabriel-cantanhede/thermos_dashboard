@@ -13,7 +13,9 @@ with st.container(border=True):
 
 #### Navigation buttons ###
 # st.markdown("-----")
-nav_prev, nav_next = st.columns(2, vertical_alignment='bottom')
+# nav_next = st.columns(1, vertical_alignment='bottom')
 
-with nav_next:
-    st.page_link("views/user_login.py", label="Avançar",)
+with st.container():
+    _, _, nav_next = st.columns([0.4,0.2,0.4], vertical_alignment='bottom')
+    with nav_next:
+        st.page_link("views/user_login.py", label="Avançar 	:arrow_right:",)

@@ -149,6 +149,14 @@ try:
                 dict_ppos = eval(row['pontos_atencao'].replace('\\n', ' '))
                 f_string = f"- **{row['estado']} -** **_Imprensa_**: {dict_ppos['press']} | **_Digital_**: {dict_ppos['dig']}"
                 st.write(f_string)
+    
+    ### Navigation Buttons
+    with st.container():
+        nav_prev, _, nav_next = st.columns([0.4,0.2,0.4], vertical_alignment='bottom')
+        with nav_prev:
+            st.page_link("views/dash.py", label=":arrow_left: Voltar",)
+        with nav_next:
+            st.page_link("views/view_states.py", label="Avançar :arrow_right:",)
 
 except Exception as e:
     st.error("Falha ao recuperar dados do termômetro, tente logar novamente.")
