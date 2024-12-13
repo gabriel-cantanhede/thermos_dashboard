@@ -10,16 +10,81 @@ img[data-testid="stLogo"] {
     background-repeat: no-repeat;
     background-position: 4px 20px;
 }*/
+/* Hiding st branding and menus from user */
+a._container_gzau3_1._viewerBadge_nim44_23 {
+    visibility: hidden;
+}
+div._profileContainer_gzau3_53{
+    visibility: hidden;
+}
+/*#MainMenu {visibility: hidden;}
+*/
+header[data-testid=stHeader] { /*! IMPORTANT ! This here hides the streamlit runtime header, hiding unwanted interactions from users*/
+    visibility: hidden;
+}
+/*header[data-testid=stNavSectionHeader] {
+    visibility: visible;
+}*/
+footer {
+    visibility: hidden;
+}
+
+/* Styling my custom footer */
+/*
+a:link , a:visited{
+    color: hsl(239, 100%, 70%);  theme's text color hex code at 75 percent brightness
+    background-color: transparent;
+    text-decoration: none;
+    }
+    
+a:hover,  a:active {
+color: #0283C3; theme's primary color
+background-color: transparent;
+text-decoration: underline;
+}
+
+#page-container {
+    position: relative;
+    min-height: 0%; was 10vh
+}
+*/
+
+/*.
+footer {
+position: relative;
+left: 0;
+right: 600px;
+top:450px;
+bottom: 0;
+width: 80%;
+background-color: transparent;
+color: #808080;  theme's text color hex code at 50 percent brightness
+text-align: left;  you can replace 'left' with 'center' or 'right' if you want
+}
+*/
 
 /* Vertical Block - Streamlit */
-
-/*
-div.stVerticalBlock.st-emotion-cache-1n76uvr.e1f1d6gn2 {
-    border: 1px solid #0901ff;
+div.st-emotion-cache-4uzi61.e1f1d6gn0{
+    border: 1px solid #6b6b6bb3;
+    border-radius: 8px;
+    /*box-shadow: 0 0.15rem 1.75rem 0 rgba(130, 131, 134, 0.094) !important;*/
+}
+/* this one changes the background color just for the textual data in the view_group and view_states pages */
+#root > div:nth-child(1) > div.withScreencast > div > div > section.stMain.st-emotion-cache-bm2z3a.ea3mdgi8 > div.stMainBlockContainer.block-container.st-emotion-cache-1jicfl2.ea3mdgi5 > div > div > div > div.stHorizontalBlock.st-emotion-cache-ocqkz7.e1f1d6gn5 > div:nth-child(1) > div > div > div > div{
+    border: 1px solid #000000;
     border-radius: 8px;
     padding: 5 5 5 5;
-    box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15) !important;
-}*/
+    /*box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15) !important;*/
+    background-color: #26c4fd41;
+}
+
+#root > div:nth-child(1) > div.withScreencast > div > div > section.stMain.st-emotion-cache-bm2z3a.ea3mdgi8 > div.stMainBlockContainer.block-container.st-emotion-cache-1jicfl2.ea3mdgi5 > div > div > div > div.stHorizontalBlock.st-emotion-cache-ocqkz7.e1f1d6gn5 > div:nth-child(2) > div > div > div > div{
+    border: 1px solid #000000;
+    border-radius: 8px;
+    padding: 5 5 5 5;
+    /*box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15) !important;*/
+    background-color: #fdef2641;
+}
 
 /* Card */
 /* Adapted from https://startbootstrap.com/theme/sb-admin-2 */
