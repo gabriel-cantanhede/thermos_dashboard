@@ -22,6 +22,7 @@ try:
     # Querying the adequate view table
     view_choice = 'reputacao_estados_15dias'
     df_response = dbc.load_data(conn, view_choice)
+    # df_response
 
     # Prepping tables and values to build visualizations
     min_date = df_response['dia'].min().date() # this is necessary to limit dataviz to the existing days in the data 
