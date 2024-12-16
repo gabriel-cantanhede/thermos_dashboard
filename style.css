@@ -1,0 +1,147 @@
+/* Logo */
+/* Suggested by Michael Hollander -> https://discuss.streamlit.io/t/st-logo-image-size/71085/6*/
+img[data-testid="stLogo"] {
+    height: 3rem;
+}
+/*img.stLogo.st-emotion-cache-173tlbm.eczjsme7 {
+    background-image: url(https://grupoequatorialenergia-my.sharepoint.com/:i:/r/personal/gabriel_cantanhede_equatorialenergia_com_br/Documents/logo_azul.png?csf=1&web=1&e=qynVhY);
+    background-image: url(../assets/logo_azul.png);
+    background-size: 200px;
+    background-repeat: no-repeat;
+    background-position: 4px 20px;
+}*/
+/* Hiding st branding and menus from user */
+a._container_gzau3_1._viewerBadge_nim44_23 {
+    visibility: hidden;
+}
+div._profileContainer_gzau3_53{
+    visibility: hidden;
+}
+/*#MainMenu {visibility: hidden;}
+*/
+header[data-testid=stHeader] { /*! IMPORTANT ! This here hides the streamlit runtime header, hiding unwanted interactions from users*/
+    visibility: hidden;
+}
+/*header[data-testid=stNavSectionHeader] {
+    visibility: visible;
+}*/
+footer {
+    visibility: hidden;
+}
+
+/* Styling my custom footer */
+/*
+a:link , a:visited{
+    color: hsl(239, 100%, 70%);  theme's text color hex code at 75 percent brightness
+    background-color: transparent;
+    text-decoration: none;
+    }
+    
+a:hover,  a:active {
+color: #0283C3; theme's primary color
+background-color: transparent;
+text-decoration: underline;
+}
+
+#page-container {
+    position: relative;
+    min-height: 0%; was 10vh
+}
+*/
+
+/*.
+footer {
+position: relative;
+left: 0;
+right: 600px;
+top:450px;
+bottom: 0;
+width: 80%;
+background-color: transparent;
+color: #808080;  theme's text color hex code at 50 percent brightness
+text-align: left;  you can replace 'left' with 'center' or 'right' if you want
+}
+*/
+
+/* Vertical Block - Streamlit */
+div.st-emotion-cache-4uzi61.e1f1d6gn0{
+    border: 1px solid #6b6b6bb3;
+    border-radius: 8px;
+    /*box-shadow: 0 0.15rem 1.75rem 0 rgba(130, 131, 134, 0.094) !important;*/
+}
+/* this one changes the background color just for the textual data in the view_group and view_states pages */
+#root > div:nth-child(1) > div.withScreencast > div > div > section.stMain.st-emotion-cache-bm2z3a.ea3mdgi8 > div.stMainBlockContainer.block-container.st-emotion-cache-1jicfl2.ea3mdgi5 > div > div > div > div.stHorizontalBlock.st-emotion-cache-ocqkz7.e1f1d6gn5 > div:nth-child(1) > div > div > div > div{
+    border: 1px solid #000000;
+    border-radius: 8px;
+    padding: 5 5 5 5;
+    /*box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15) !important;*/
+    background-color: #26c4fd41;
+}
+
+#root > div:nth-child(1) > div.withScreencast > div > div > section.stMain.st-emotion-cache-bm2z3a.ea3mdgi8 > div.stMainBlockContainer.block-container.st-emotion-cache-1jicfl2.ea3mdgi5 > div > div > div > div.stHorizontalBlock.st-emotion-cache-ocqkz7.e1f1d6gn5 > div:nth-child(2) > div > div > div > div{
+    border: 1px solid #000000;
+    border-radius: 8px;
+    padding: 5 5 5 5;
+    /*box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15) !important;*/
+    background-color: #fdef2641;
+}
+
+/* Card */
+/* Adapted from https://startbootstrap.com/theme/sb-admin-2 */
+div.css-1r6slb0.e1tzin5v2 {
+background-color: #83ecfe;
+border: 1px solid #c6c9fd;
+padding: 5% 5% 5% 10%;
+border-radius: 5px;
+
+border-left: 0.5rem solid #1a008e !important;
+box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15) !important;
+
+}
+/* Navi Buttons */
+a[data-testid="stPageLink-NavLink"]{
+    background-color: #f7f7f7;
+    border: 1px solid #0901ff;
+    border-radius: 8px;
+    padding: 1% 40% 1% 40%;
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15) !important;
+}
+
+/* Disabled Navi Buttons */
+a.st-emotion-cache-u9ybrz.e11k5jya1{
+    background-color: #e6e6e6;
+    border: 1px solid #848484;
+    border-radius: 8px;
+    padding: 1% 40% 1% 40%;
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15) !important;
+}
+
+label.css-mkogse.e16fv1kl2 {
+color: #36b9cc !important;
+font-weight: 700 !important;
+text-transform: uppercase !important;
+}
+
+
+/* Move block container higher */
+div.block-container.css-18e3th9.egzxvld2 {
+margin-top: -5em;
+}
+
+
+/* Hide hamburger menu and footer */
+div.css-r698ls.e8zbici2 {
+display: none;
+}
+
+footer.css-ipbk5a.egzxvld4 {
+display: none;
+}
+
+footer.css-12gp8ed.eknhn3m4 {
+display: none;
+}
+
+div.vg-tooltip-element {
+display: none;
+}
