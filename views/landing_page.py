@@ -1,12 +1,19 @@
 import streamlit as st
 from datetime import datetime, timezone
 
+# # My custom funcs and py files
+# import control.misc_funcs as misc
+# import control.db_connection as dbc
 
-# if "ts_landing" not in st.session_state.keys():
-#     st.session_state["ts_landing"] = str(datetime.now(tz=timezone.utc))
+# # Sanity check on the db connection object
+# if "__conn" not in st.session_state:
+#     conn = dbc.init_connection()
+#     st.session_state['__conn'] = conn
+# else:
+#     conn = st.session_state['__conn']
     
 
-st.markdown("# :thermometer: :blue[Bem vindo ao Informe Reputacional Automático do Grupo Equatorial]")
+st.markdown("# :thermometer: :blue[Bem-vindo ao Informe Reputacional Automático do Grupo Equatorial]")
 
 with st.container(border=True):
     st.markdown("""Para acessar os dados do Informe Reputacional, é necessário ter credenciais de acesso ao app. Caso ainda não as tenha, entre em contato com o time de <a href=mailto:gabriel.cantanhede@equatorialenergia.com.br>Inteligência de Dados</a> para obtê-las.""", unsafe_allow_html=True)

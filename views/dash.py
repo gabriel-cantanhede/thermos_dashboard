@@ -10,23 +10,28 @@ import time
 import control.misc_funcs as misc
 import control.db_connection as dbc
 
+conn = None
 # Sanity check on the db connection object
 if "__conn" not in st.session_state:
-    conn = dbc.init_connection()
     st.session_state['__conn'] = conn
 else:
     conn = st.session_state['__conn']
 
 try:
     # TODO Might incorporate a select box where the user chooses which data will be analyzed, and which date to look to (maybe)
-    view_choice = 'reputacao_grupo_15dias'
+    view_group_choice = 'reputacao_grupo_15dias'
     # date_to_query = datetime.today().date()
-    df_response = dbc.load_data(conn, view_choice)
+    df_response = dbc.load_data(conn, view_group_choice)
+    # df_response['dia'] = pd.to_datetime(df_response['dia']).dt.date.astype('datetime64[ns]')
     # st.write(df_response) # OG Debugging
 
 
     # Prepping tables and values to build visualizations
     df_big_numbers = df_response[['dia', 'favorabilidade', 'saudabilidade', 'reputacao']].copy()
+
+    view_states_choice = 'reputacao_estados_15dias'
+    df_response_states = dbc.load_data(conn, view_states_choice)
+    # df_big_numbers_states
 
     # Retrieving most recent day in the dataset
     current_day_in_data = df_big_numbers.iat[0,0].date()
@@ -47,7 +52,7 @@ try:
 
 
     #### Visualizations 
-    name_viz = ":chart_with_upwards_trend: Reputação do Grupo nos :blue[últimos 15 dias]" if view_choice == 'reputacao_grupo_15dias' else "Reputação do Grupo"
+    name_viz = ":chart_with_upwards_trend: Reputação do Grupo nos :blue[últimos 15 dias]" if view_group_choice == 'reputacao_grupo_15dias' else "Reputação do Grupo"
     st.header(name_viz, divider='gray')
 
     ### Line chart showing the trends for overall favorability over the year
@@ -278,6 +283,32 @@ try:
                 ))
         st.plotly_chart(fig_today_rep)
     
+    st.header("Big Numbers", divider='blue')
+    with st.container():
+        # df_big_numbers_states
+        numeric_cols = [
+            'total_noticias',
+            'imprensa_positivas',
+            'imprensa_negativas',
+            'total_mencoes',
+            'digital_positivas',
+            'digital_neutras',
+            'digital_negativas',
+            ]
+        to_group_cols = [
+            'dia',
+            'estado',
+            ]
+        df_big_numbers_states = df_response_states[to_group_cols + numeric_cols]
+        min_date_num, max_date_num = df_big_numbers_states['dia'].min(), df_big_numbers_states['dia'].max()
+        df_num_states_grouped = df_big_numbers_states.groupby(by=['estado'])
+        # st.write(df_num_states_grouped[numeric_cols].sum())
+        st.markdown(f"Valores cumulativos referentes ao período entre {min_date_num.date()} e {max_date_num.date()}")
+        st.write(df_num_states_grouped[numeric_cols].sum())
+
+
+
+
     ### Navigation Buttons
     with st.container():
         nav_prev, _, nav_next = st.columns([0.4,0.2,0.4], vertical_alignment='bottom')
@@ -288,6 +319,7 @@ try:
 
 except Exception as e:
     st.error("Falha ao recuperar dados do termômetro, tente logar novamente.")
-    time.sleep(5)
-    st.switch_page('views/user_login.py')
+    e
+    # time.sleep(5)
+    # st.switch_page('views/user_login.py')
 # st.dataframe(df_data_thermos)

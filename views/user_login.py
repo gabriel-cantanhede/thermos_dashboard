@@ -34,21 +34,26 @@ else:
     with st.container(border=True):
         email_user = st.text_input("Email", placeholder="Insira seu email cadastrado", key="_email")
         pwd_user = st.text_input("Senha",type='password', key="_pwd")
+        creds = dict(email=email_user, password=pwd_user)
         btn_login = st.button("Entrar")
 
         #saving the user data into the session state
         if btn_login:
             try:
-                response = conn.auth.sign_in_with_password(dict(email=email_user, password=pwd_user))
-                st.session_state['__conn'] = conn
-                time.sleep(2)
-                st.write(f"## Bem vindo(a), :blue[{response.user.user_metadata["first_name"]}]!")
+                response = conn.auth.sign_in_with_password(credentials=creds)
+                # response
+                # user_data = conn.auth.get_user.user_metadata
+                time.sleep(3)
+                # st.session_state['__conn'] = conn
+                # st.write(response.user)
+                st.success(f"## Bem-vindo(a), :blue[{conn.auth.get_user().user.user_metadata["first_name"]}]!")
                 
                 #### Navigation buttons ###
                 with st.container():
                     _, _, nav_next = st.columns([0.4,0.2,0.4], vertical_alignment='bottom')
                     with nav_next:
-                        st.page_link("views/user_login.py", label="Avançar 	:arrow_right:",)
+                        st.page_link("views/dash.py", label="Avançar 	:arrow_right:",)
                 
             except AuthApiError as auth_error:
-                st.error("Erro ao tentar fazer login. Por favor, tente novamente.")   
+                st.error("Erro ao tentar fazer login. Por favor, tente novamente.")
+                auth_error   
