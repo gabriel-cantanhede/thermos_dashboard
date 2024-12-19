@@ -1,8 +1,13 @@
 /* Logo */
 /* Suggested by Michael Hollander -> https://discuss.streamlit.io/t/st-logo-image-size/71085/6*/
 img[data-testid="stLogo"] {
+    position: sticky;
     height: 3rem;
+    background-size: 200px;
+    background-repeat: no-repeat;
+    background-position: 4px 20px;
 }
+
 /*img.stLogo.st-emotion-cache-173tlbm.eczjsme7 {
     background-image: url(https://grupoequatorialenergia-my.sharepoint.com/:i:/r/personal/gabriel_cantanhede_equatorialenergia_com_br/Documents/logo_azul.png?csf=1&web=1&e=qynVhY);
     background-image: url(../assets/logo_azul.png);
@@ -10,6 +15,7 @@ img[data-testid="stLogo"] {
     background-repeat: no-repeat;
     background-position: 4px 20px;
 }*/
+
 /* Hiding st branding and menus from user */
 a._container_gzau3_1._viewerBadge_nim44_23 {
     visibility: hidden;
@@ -17,17 +23,26 @@ a._container_gzau3_1._viewerBadge_nim44_23 {
 div._profileContainer_gzau3_53{
     visibility: hidden;
 }
+
 /*#MainMenu {visibility: hidden;}
 */
+
 header[data-testid=stHeader] { /*! IMPORTANT ! This here hides the streamlit runtime header, hiding unwanted interactions from users*/
-    visibility: hidden;
+    visibility: visible;
+    background: #ffffff;
+    min-height: 4.8rem;
 }
+
 /*header[data-testid=stNavSectionHeader] {
     visibility: visible;
 }*/
-footer {
-    visibility: hidden;
-}
+
+/*
+footer {/*
+    visibility: visible;
+    min-height: 5rem;
+    content: 'Texto';
+}*/
 
 /* Styling my custom footer */
 /*

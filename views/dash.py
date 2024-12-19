@@ -13,7 +13,7 @@ import control.db_connection as dbc
 conn = None
 # Sanity check on the db connection object
 if "__conn" not in st.session_state:
-    st.session_state['__conn'] = conn
+    st.session_state['__conn'] = dbc.init_connection()
 else:
     conn = st.session_state['__conn']
 
@@ -53,7 +53,10 @@ try:
 
     #### Visualizations 
     name_viz = ":chart_with_upwards_trend: Reputação do Grupo nos :blue[últimos 15 dias]" if view_group_choice == 'reputacao_grupo_15dias' else "Reputação do Grupo"
-    st.header(name_viz, divider='gray')
+    st.header(name_viz, divider='blue')
+
+    curr_user = conn.auth.get_user() # Dastardly way of getting the page to throw an AuthAPIError if the user hasn't logged
+    # TODO Change this to a proper user fencing layout and logic
 
     ### Line chart showing the trends for overall favorability over the year
     with st.container(border=True):
@@ -171,7 +174,7 @@ try:
 
 
 
-    st.header(f':bar_chart: Indicadores do dia :blue[{current_day_in_data:%d/%m/%y}] :gray[(_hoje vs. ontem_)]', divider='gray')
+    st.header(f':bar_chart: Indicadores do dia :blue[{current_day_in_data:%d/%m/%y}] :gray[(_hoje vs. ontem_)]', divider='blue')
     with st.container(border=True):
         col_fav, col_saud = st.columns([0.5, 0.5], gap='small', vertical_alignment='center')
         ## Favorability Gauge 
@@ -284,12 +287,14 @@ try:
         st.plotly_chart(fig_today_rep)
     
     st.header("Big Numbers", divider='blue')
-    with st.container():
+    with st.container(border=True):
         # df_big_numbers_states
-        numeric_cols = [
+        numeric_cols_press = [
             'total_noticias',
             'imprensa_positivas',
             'imprensa_negativas',
+            ]
+        numeric_cols_digital = [
             'total_mencoes',
             'digital_positivas',
             'digital_neutras',
@@ -299,15 +304,90 @@ try:
             'dia',
             'estado',
             ]
-        df_big_numbers_states = df_response_states[to_group_cols + numeric_cols]
-        min_date_num, max_date_num = df_big_numbers_states['dia'].min(), df_big_numbers_states['dia'].max()
-        df_num_states_grouped = df_big_numbers_states.groupby(by=['estado'])
-        # st.write(df_num_states_grouped[numeric_cols].sum())
-        st.markdown(f"Valores cumulativos referentes ao período entre {min_date_num.date()} e {max_date_num.date()}")
-        st.write(df_num_states_grouped[numeric_cols].sum())
+        column_to_display_press = dict(
+            estado='Estado',
+            total_noticias='Total de Notícias',
+            imprensa_positivas='Notícias Positivas',
+            imprensa_negativas='Notícias Negativas',
+            )
+        column_to_display_dig = dict(
+            estado='Estado',
+            total_mencoes='Total de Menções (Digital)',
+            digital_positivas='Menções Positivas',
+            digital_neutras='Menções Neutras',
+            digital_negativas='Menções Negativas',
+            )
+        min_date_num, max_date_num = df_response_states['dia'].min(), df_response_states['dia'].max()
 
+        df_big_numbers_digital = df_response_states[to_group_cols + numeric_cols_digital].copy()
+        df_big_numbers_press = df_response_states[to_group_cols + numeric_cols_press].copy()
+        df_num_digital_grouped = df_big_numbers_digital.groupby(by=['estado'])
+        df_num_press_grouped = df_big_numbers_press.groupby(by=['estado'])
 
+        st.markdown(f"### Valores cumulativos referentes ao período entre :blue[{min_date_num.date():%d/%m} e {max_date_num.date():%d/%m/%y}]")
+        
+        # st.dataframe(df_num_dig_grouped[numeric_cols_digital].sum(), column_config=column_to_display_dig, use_container_width=True,)
+        col_bignum1, col_bignum2 = st.columns([0.5, 0.5], gap="small")
+        with col_bignum1:
+            st.markdown("### Imprensa")
+            # Plotting the big numbers as a stacked bar chart, to better enphasize magnitude
+            df_sum_press = df_num_press_grouped[numeric_cols_press].sum().reset_index()
 
+            fig_nums_press = go.Figure(data=[
+                go.Bar(
+                    name='Notícias Negativas',
+                    x=df_sum_press['estado'],
+                    y=df_sum_press['imprensa_negativas'],
+                    text=df_sum_press['imprensa_negativas'], 
+                    textposition='auto'),
+                go.Bar(
+                    name='Noticias Positivas', 
+                    x=df_sum_press['estado'], 
+                    y=df_sum_press['imprensa_positivas'], 
+                    text=df_sum_press['imprensa_positivas'], 
+                    textposition='auto'),
+                ])
+            fig_nums_press.update_layout(
+                barmode='stack', 
+                height = 550,
+                title=dict(
+                    text='Quantidade de notícias na imprensa, por estado',
+                    automargin=True,
+                    font=dict(color='darkblue', size=30),
+                    x=0.45,
+                    y=0.85,
+                    xanchor='center',
+                    yanchor='top',
+                    ))
+            
+            st.plotly_chart(fig_nums_press)
+             
+        with col_bignum2:
+            st.markdown("### Digital")
+            df_sum_digital = df_num_digital_grouped[numeric_cols_digital].sum().reset_index()
+            # df_sum_digital
+            fig_nums_dig = go.Figure(data=[
+                go.Bar(
+                    name='Menções Negativas', 
+                    x=df_sum_digital['estado'], 
+                    y=df_sum_digital['digital_negativas'],
+                    text=df_sum_digital['digital_negativas'], 
+                    textposition='auto'),
+                go.Bar(
+                    name='Menções Neutras', 
+                    x=df_sum_digital['estado'], 
+                    y=df_sum_digital['digital_neutras'],
+                    text=df_sum_digital['digital_neutras'], 
+                    textposition='auto'),
+                go.Bar(
+                    name='Menções Positivas', 
+                    x=df_sum_digital['estado'], 
+                    y=df_sum_digital['digital_positivas'],
+                    text=df_sum_digital['digital_positivas'], 
+                    textposition='auto'),
+                ])
+            fig_nums_dig.update_layout(barmode='stack')
+            st.plotly_chart(fig_nums_dig)
 
     ### Navigation Buttons
     with st.container():
@@ -319,7 +399,8 @@ try:
 
 except Exception as e:
     st.error("Falha ao recuperar dados do termômetro, tente logar novamente.")
+    #TODO spinning wheel with a message (redirecionando em 10s - dynamic coountdown)
     e
-    # time.sleep(5)
-    # st.switch_page('views/user_login.py')
-# st.dataframe(df_data_thermos)
+#     # time.sleep(10)
+#     # st.switch_page('views/user_login.py')
+

@@ -17,50 +17,52 @@ if "__conn" not in st.session_state:
 else:
     conn = st.session_state['__conn']
 
-## Preparing data - querying the adequate view table
-view_choice = 'reputacao_estados_15dias'
-df_response = dbc.load_data(conn, view_choice)
-
 # Page Header
 st.header(":thermometer: Informe Reputacional - Visão Estados")
-# User input section
-with st.container(border=True):
-    # sel_business = st.selectbox(
-    #     label="Selecione uma Empresa:",
-    #     options=("Distribuição", "Saneamento", "Serviços", "Eólica", "Solar"),
-    #     index=0,
-    #     placeholder="Selecione uma opção",
-    # )
-    multisel_place = st.multiselect(
-        label="Selecione uma Praça:",
-        options=("AL", "AP", "GO", "MA", "PA", "PI", "RS"),
-        default=("AL", "AP", "GO", "MA", "PA", "PI", "RS"),
-        placeholder="Selecione quantas praças deseja ver",
-    )
-
-    dict_states = {
-        "AL":"Alagoas",
-        "AP":"Amapá",
-        "GO":"Goiás",
-        "MA":"Maranhão",
-        "PA":"Pará",
-        "PI":"Piauí",
-        "RS":"Rio Grande do Sul",}
-    
-    # Prepping tables and values to build visualizations
-    min_date = df_response['dia'].min().date() # this is necessary to limit dataviz to the existing days in the data 
-    current_day_in_data = df_response.iat[0,0].date() # Retrieving most recent day in the dataset
-
-    sel_date = st.date_input(
-        label="Selecione o dia:",
-        value=current_day_in_data,
-        min_value=min_date,
-        max_value=datetime.today().date(),
-        )
-    sel_date_dtime = pd.to_datetime(sel_date)
-
 
 try:
+    ## Preparing data - querying the adequate view table
+    view_choice = 'reputacao_estados_15dias'
+    df_response = dbc.load_data(conn, view_choice)
+
+    # User input section
+    with st.container(border=True):
+        # sel_business = st.selectbox(
+        #     label="Selecione uma Empresa:",
+        #     options=("Distribuição", "Saneamento", "Serviços", "Eólica", "Solar"),
+        #     index=0,
+        #     placeholder="Selecione uma opção",
+        # )
+        multisel_place = st.multiselect(
+            label="Selecione um Estado:",
+            options=("AL", "AP", "GO", "MA", "PA", "PI", "RS"),
+            default=("AL", "AP", "GO", "MA", "PA", "PI", "RS"),
+            placeholder="Selecione quantas distribuidoras deseja ver",
+        )
+
+        dict_states = {
+            "AL":"Alagoas",
+            "AP":"Amapá",
+            "GO":"Goiás",
+            "MA":"Maranhão",
+            "PA":"Pará",
+            "PI":"Piauí",
+            "RS":"Rio Grande do Sul",}
+        
+        # Prepping tables and values to build visualizations
+        min_date = df_response['dia'].min().date() # this is necessary to limit dataviz to the existing days in the data 
+        current_day_in_data = df_response.iat[0,0].date() # Retrieving most recent day in the dataset
+
+        sel_date = st.date_input(
+            label="Selecione o dia:",
+            value=current_day_in_data,
+            min_value=min_date,
+            max_value=datetime.today().date(),
+            )
+        sel_date_dtime = pd.to_datetime(sel_date)
+
+
+
     for place in multisel_place:
         # Necessary in case the user tries to select today's date, but no analyst has uploaded today's data
         st.header(dict_states[place], divider='blue')
@@ -180,6 +182,6 @@ try:
 
 except Exception as e:
     st.error("Falha ao recuperar dados do termômetro, tente logar novamente.")
-    st.write(e)
+    # st.write(e)
     # time.sleep(5) #TODO Enable these lines before shipping
     # st.switch_page('views/user_login.py')

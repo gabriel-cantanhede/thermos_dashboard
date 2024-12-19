@@ -3,6 +3,7 @@ import control.db_connection as dbc
 import time
 from datetime import datetime, timezone
 from supabase import AuthApiError
+from streamlit_extras.stylable_container import stylable_container
 
 
 conn = None
@@ -32,7 +33,9 @@ else:
     st.markdown("##	:bust_in_silhouette: :blue[Login de Usuário]")
 
     with st.container(border=True):
-        email_user = st.text_input("Email", placeholder="Insira seu email cadastrado", key="_email")
+        # col_login, col_btn = st.columns(spec=[0.9, 0.1]) 
+        # with col_login:
+        email_user = st.text_input("Email", placeholder="Insira seu email cadastrado", key="_email", )
         pwd_user = st.text_input("Senha",type='password', key="_pwd")
         creds = dict(email=email_user, password=pwd_user)
         btn_login = st.button("Entrar")
