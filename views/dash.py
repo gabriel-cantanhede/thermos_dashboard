@@ -52,7 +52,7 @@ try:
 
 
     #### Visualizations 
-    name_viz = ":chart_with_upwards_trend: Reputação do Grupo nos :blue[últimos 15 dias]" if view_group_choice == 'reputacao_grupo_15dias' else "Reputação do Grupo"
+    name_viz = ":chart_with_upwards_trend: KPIs de reputação (:blue[_últimos 15 dias_])" if view_group_choice == 'reputacao_grupo_15dias' else "Reputação do Grupo"
     st.header(name_viz, divider='blue')
 
     curr_user = conn.auth.get_user() # Dastardly way of getting the page to throw an AuthAPIError if the user hasn't logged
@@ -62,60 +62,60 @@ try:
     with st.container(border=True):
         #### Visualizations 
         ### Line chart showing the trends for overall favorability over the year
-        fig_line = go.Figure(go.Scatter(
-            x= df_big_numbers['dia'],
-            y= df_big_numbers['reputacao'],
-            # color=df_big_numbers['reputacao'],
-            name='Reputação',
-            mode='lines',
-            line=dict(color='#0714E1', width=4, dash='solid'),
-            legendgroup= 'group 1',
-            zorder=0,
-            ))
-
-        fig_line.add_trace(go.Scatter(
-            x= df_big_numbers['dia'],
-            y= df_big_numbers['favorabilidade'],
-            # color=df_big_numbers['reputacao'],
-            name='Favorabilidade',
-            mode='lines',
-            line=dict(color='#C30DE1', width=2, dash='solid'),
-            legendgroup= 'group 1',
-            zorder=1,
-            ))
-
-        fig_line.add_trace(go.Scatter(
-            x= df_big_numbers['dia'],
-            y= df_big_numbers['saudabilidade'],
-            # color=df_big_numbers['reputacao'],
-            name='Saudabilidade',
-            mode='lines',
-            line=dict(color='#7AE00B', width=2, dash='solid'),
-            legendgroup= 'group 1',
-            zorder=2,
-            ))
-
         count_days = df_big_numbers['dia'].count()
-
-        fig_line.add_trace(go.Scatter(
-                                x=df_big_numbers['dia'], 
-                                y=[70] * count_days,
-                                legendgroup='group2', 
-                                mode='lines',
-                                name='Média', 
-                                line=dict(color='gold', width=4, dash='dashdot'),
-                                zorder=3,
-                                ))
-        fig_line.add_trace(go.Scatter(
-                                x=df_big_numbers['dia'], 
-                                y=[35] * count_days,
-                                legendgroup='group2',
-                                legendgrouptitle_text='Referência',
-                                mode='lines',
-                                name='Baixa', 
-                                line=dict(color='red', width=4, dash='dashdot'),
-                                zorder=4,
-                                ))
+        fig_line = go.Figure(
+            data=[
+                go.Scatter(
+                    x= df_big_numbers['dia'],
+                    y= df_big_numbers['reputacao'],
+                    # color=df_big_numbers['reputacao'],
+                    name='Reputação',
+                    mode='lines',
+                    line=dict(color='#0714E1', width=5, dash='solid'),
+                    legendgroup= 'group 1',
+                    zorder=4,
+                ),
+                go.Scatter(
+                    x= df_big_numbers['dia'],
+                    y= df_big_numbers['favorabilidade'],
+                    # color=df_big_numbers['reputacao'],
+                    name='Favorabilidade',
+                    mode='lines',
+                    line=dict(color='#C30DE1', width=3, dash='solid'),
+                    legendgroup= 'group 1',
+                    zorder=3,
+                ),
+                go.Scatter(
+                    x= df_big_numbers['dia'],
+                    y= df_big_numbers['saudabilidade'],
+                    # color=df_big_numbers['reputacao'],
+                    name='Saudabilidade',
+                    mode='lines',
+                    line=dict(color='#7AE00B', width=3, dash='solid'),
+                    legendgroup= 'group 1',
+                    zorder=2,
+                ),
+                go.Scatter(
+                    x=df_big_numbers['dia'], 
+                    y=[70] * count_days,
+                    legendgroup='group2', 
+                    mode='lines',
+                    name='Média', 
+                    line=dict(color='gold', width=4, dash='dashdot'),
+                    zorder=1,
+                    ),
+                go.Scatter(
+                    x=df_big_numbers['dia'], 
+                    y=[35] * count_days,
+                    legendgroup='group2',
+                    legendgrouptitle_text='Referência',
+                    mode='lines',
+                    name='Baixa', 
+                    line=dict(color='red', width=4, dash='dashdot'),
+                    zorder=0,
+                    ),
+                ]
+            )
 
         fig_line.update_layout(
             # title={"text":name_viz},
@@ -130,8 +130,16 @@ try:
                 t=100,
                 pad=4
             ),
-            xaxis=dict(title_text="", ticks="outside"),
-            yaxis=dict(title_text="Desempenho (%)", ticks="outside"),)
+            xaxis=dict(title_text="Dias", ticks="outside"),
+            yaxis=dict(title_text="Desempenho (%)", ticks="outside"),
+            title=dict(
+                    text='Desempenho dos indicadores de reputação do Grupo',
+                    automargin=True,
+                    font=dict(color='darkblue', size=20),
+                    x=0.45,
+                    y=0.9,
+                    xanchor='center',
+                    yanchor='top',))
 
         # These lines are fucking kickass!! They literally make the line chart fucking lit
         # by adding handy buttons to the top to show certain date intervals, and if that wasn't fucking enought
@@ -285,8 +293,10 @@ try:
                 yanchor='top',
                 ))
         st.plotly_chart(fig_today_rep)
+        st.markdown(f"Obs.: O valor abaixo de cada percentual é a diferença entre o indicador de hoje")
+
     
-    st.header("Big Numbers", divider='blue')
+    st.header(":bar_chart: Big Numbers", divider='blue')
     with st.container(border=True):
         # df_big_numbers_states
         numeric_cols_press = [
@@ -324,7 +334,6 @@ try:
         df_num_digital_grouped = df_big_numbers_digital.groupby(by=['estado'])
         df_num_press_grouped = df_big_numbers_press.groupby(by=['estado'])
 
-        st.markdown(f"### Valores cumulativos referentes ao período entre :blue[{min_date_num.date():%d/%m}] e :blue[{max_date_num.date():%d/%m/%y}]")
         
         # st.dataframe(df_num_dig_grouped[numeric_cols_digital].sum(), column_config=column_to_display_dig, use_container_width=True,)
         col_bignum1, col_bignum2 = st.columns([0.5, 0.5], gap="small")
@@ -335,32 +344,36 @@ try:
 
             fig_nums_press = go.Figure(data=[
                 go.Bar(
-                    name='Notícias Negativas',
+                    name='Negativas',
                     x=df_sum_press['estado'],
                     y=df_sum_press['imprensa_negativas'],
                     text=df_sum_press['imprensa_negativas'], 
                     textposition='auto',
-                    marker_color='red',),
+                    marker_color='#DD2100',),
                 go.Bar(
-                    name='Noticias Positivas', 
+                    name='Positivas', 
                     x=df_sum_press['estado'], 
                     y=df_sum_press['imprensa_positivas'], 
                     text=df_sum_press['imprensa_positivas'], 
                     textposition='auto',
-                    marker_color='darkblue',),
+                    marker_color='#0049F5',),
                 ])
             fig_nums_press.update_layout(
                 barmode='stack', 
                 height = 550,
                 title=dict(
-                    text='Quantidade de notícias na imprensa, por estado',
+                    text='Quantidade de notícias na imprensa',
                     automargin=True,
                     font=dict(color='darkblue', size=20),
                     x=0.45,
                     y=0.9,
                     xanchor='center',
                     yanchor='top',
-                    ))
+                    ),
+                yaxis=dict(title="Quantidade"),
+                xaxis=dict(title='Estados'),
+                legend=dict(title='Notícias'),
+                )
             
             st.plotly_chart(fig_nums_press)
              
@@ -370,40 +383,49 @@ try:
             # df_sum_digital
             fig_nums_dig = go.Figure(data=[
                 go.Bar(
-                    name='Menções Negativas', 
+                    name='Negativas', 
                     x=df_sum_digital['estado'], 
                     y=df_sum_digital['digital_negativas'],
                     text=df_sum_digital['digital_negativas'],
-                    marker_color='red', 
+                    marker_color='#DD2100', 
                     textposition='auto'),
                 go.Bar(
-                    name='Menções Neutras', 
+                    name='Neutras', 
                     x=df_sum_digital['estado'], 
                     y=df_sum_digital['digital_neutras'],
                     text=df_sum_digital['digital_neutras'],
-                    marker_color='lightblue', 
+                    marker_color='#00AFBB', 
                     textposition='auto'),
                 go.Bar(
-                    name='Menções Positivas', 
+                    name='Positivas', 
                     x=df_sum_digital['estado'], 
                     y=df_sum_digital['digital_positivas'],
-                    marker_color='darkblue',
+                    marker_color='#0049F5',
                     text=df_sum_digital['digital_positivas'], 
                     textposition='auto'),
                 ])
+
+
             fig_nums_dig.update_layout(
                 barmode='stack', 
                 height = 550,
                 title=dict(
-                    text='Quantidade de menções nas mídias digitais, por estado',
+                    text='Quantidade de menções nas mídias digitais',
                     automargin=True,
                     font=dict(color='darkblue', size=20),
                     x=0.45,
                     y=0.9,
                     xanchor='center',
                     yanchor='top',
-                    ))
+                    ),
+                yaxis=dict(title="Quantidade"),
+                xaxis=dict(title='Estados'),
+                legend=dict(title='Menções'),
+                )
             st.plotly_chart(fig_nums_dig)
+        
+        # Footnote for these charts
+        st.markdown(f"Obs.: Valores cumulativos referentes ao período entre :blue[{min_date_num.date():%d/%m}] e :blue[{max_date_num.date():%d/%m/%y}]")
 
     ### Navigation Buttons
     with st.container():
