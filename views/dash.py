@@ -324,12 +324,12 @@ try:
         df_num_digital_grouped = df_big_numbers_digital.groupby(by=['estado'])
         df_num_press_grouped = df_big_numbers_press.groupby(by=['estado'])
 
-        st.markdown(f"### Valores cumulativos referentes ao período entre :blue[{min_date_num.date():%d/%m} e {max_date_num.date():%d/%m/%y}]")
+        st.markdown(f"### Valores cumulativos referentes ao período entre :blue[{min_date_num.date():%d/%m}] e :blue[{max_date_num.date():%d/%m/%y}]")
         
         # st.dataframe(df_num_dig_grouped[numeric_cols_digital].sum(), column_config=column_to_display_dig, use_container_width=True,)
         col_bignum1, col_bignum2 = st.columns([0.5, 0.5], gap="small")
         with col_bignum1:
-            st.markdown("### Imprensa")
+            # st.markdown("### Imprensa")
             # Plotting the big numbers as a stacked bar chart, to better enphasize magnitude
             df_sum_press = df_num_press_grouped[numeric_cols_press].sum().reset_index()
 
@@ -339,13 +339,15 @@ try:
                     x=df_sum_press['estado'],
                     y=df_sum_press['imprensa_negativas'],
                     text=df_sum_press['imprensa_negativas'], 
-                    textposition='auto'),
+                    textposition='auto',
+                    marker_color='red',),
                 go.Bar(
                     name='Noticias Positivas', 
                     x=df_sum_press['estado'], 
                     y=df_sum_press['imprensa_positivas'], 
                     text=df_sum_press['imprensa_positivas'], 
-                    textposition='auto'),
+                    textposition='auto',
+                    marker_color='darkblue',),
                 ])
             fig_nums_press.update_layout(
                 barmode='stack', 
@@ -353,9 +355,9 @@ try:
                 title=dict(
                     text='Quantidade de notícias na imprensa, por estado',
                     automargin=True,
-                    font=dict(color='darkblue', size=30),
+                    font=dict(color='darkblue', size=20),
                     x=0.45,
-                    y=0.85,
+                    y=0.9,
                     xanchor='center',
                     yanchor='top',
                     ))
@@ -363,7 +365,7 @@ try:
             st.plotly_chart(fig_nums_press)
              
         with col_bignum2:
-            st.markdown("### Digital")
+            # st.markdown("### Digital")
             df_sum_digital = df_num_digital_grouped[numeric_cols_digital].sum().reset_index()
             # df_sum_digital
             fig_nums_dig = go.Figure(data=[
@@ -371,22 +373,36 @@ try:
                     name='Menções Negativas', 
                     x=df_sum_digital['estado'], 
                     y=df_sum_digital['digital_negativas'],
-                    text=df_sum_digital['digital_negativas'], 
+                    text=df_sum_digital['digital_negativas'],
+                    marker_color='red', 
                     textposition='auto'),
                 go.Bar(
                     name='Menções Neutras', 
                     x=df_sum_digital['estado'], 
                     y=df_sum_digital['digital_neutras'],
-                    text=df_sum_digital['digital_neutras'], 
+                    text=df_sum_digital['digital_neutras'],
+                    marker_color='lightblue', 
                     textposition='auto'),
                 go.Bar(
                     name='Menções Positivas', 
                     x=df_sum_digital['estado'], 
                     y=df_sum_digital['digital_positivas'],
+                    marker_color='darkblue',
                     text=df_sum_digital['digital_positivas'], 
                     textposition='auto'),
                 ])
-            fig_nums_dig.update_layout(barmode='stack')
+            fig_nums_dig.update_layout(
+                barmode='stack', 
+                height = 550,
+                title=dict(
+                    text='Quantidade de menções nas mídias digitais, por estado',
+                    automargin=True,
+                    font=dict(color='darkblue', size=20),
+                    x=0.45,
+                    y=0.9,
+                    xanchor='center',
+                    yanchor='top',
+                    ))
             st.plotly_chart(fig_nums_dig)
 
     ### Navigation Buttons
