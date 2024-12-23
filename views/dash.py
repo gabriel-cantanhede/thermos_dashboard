@@ -13,7 +13,8 @@ import control.db_connection as dbc
 conn = None
 # Sanity check on the db connection object
 if "__conn" not in st.session_state:
-    st.session_state['__conn'] = dbc.init_connection()
+    conn = dbc.init_connection()
+    st.session_state['__conn'] = conn
 else:
     conn = st.session_state['__conn']
 
@@ -52,11 +53,8 @@ try:
 
 
     #### Visualizations 
-    name_viz = ":chart_with_upwards_trend: KPIs de reputação (:blue[_últimos 15 dias_])" if view_group_choice == 'reputacao_grupo_15dias' else "Reputação do Grupo"
+    name_viz = ":chart_with_upwards_trend: KPIs de Reputação (:blue[_últimos 15 dias_])" if view_group_choice == 'reputacao_grupo_15dias' else "Reputação do Grupo"
     st.header(name_viz, divider='blue')
-
-    curr_user = conn.auth.get_user() # Dastardly way of getting the page to throw an AuthAPIError if the user hasn't logged
-    # TODO Change this to a proper user fencing layout and logic
 
     ### Line chart showing the trends for overall favorability over the year
     with st.container(border=True):
@@ -293,7 +291,7 @@ try:
                 yanchor='top',
                 ))
         st.plotly_chart(fig_today_rep)
-        st.markdown(f"Obs.: O valor abaixo de cada percentual é a diferença entre o indicador de hoje")
+        st.markdown("_Obs.: O valor abaixo de cada percentual é a diferença entre o indicador de hoje e o do dia anterior_")
 
     
     st.header(":bar_chart: Big Numbers", divider='blue')
@@ -370,7 +368,7 @@ try:
                     xanchor='center',
                     yanchor='top',
                     ),
-                yaxis=dict(title="Quantidade"),
+                yaxis=dict(title="Notícias"),
                 xaxis=dict(title='Estados'),
                 legend=dict(title='Notícias'),
                 )
@@ -418,14 +416,14 @@ try:
                     xanchor='center',
                     yanchor='top',
                     ),
-                yaxis=dict(title="Quantidade"),
+                yaxis=dict(title="Menções"),
                 xaxis=dict(title='Estados'),
                 legend=dict(title='Menções'),
                 )
             st.plotly_chart(fig_nums_dig)
         
         # Footnote for these charts
-        st.markdown(f"Obs.: Valores cumulativos referentes ao período entre :blue[{min_date_num.date():%d/%m}] e :blue[{max_date_num.date():%d/%m/%y}]")
+        st.markdown(f"_Obs.: Valores cumulativos referentes ao período entre :blue[{min_date_num.date():%d/%m}] e :blue[{max_date_num.date():%d/%m/%y}]_")
 
     ### Navigation Buttons
     with st.container():

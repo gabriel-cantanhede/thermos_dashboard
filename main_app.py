@@ -1,8 +1,18 @@
 import streamlit as st
 
-st.logo("https://www.equatorialenergia.com.br/wp-content/themes/equatorial-energia-child/img/logo-blue.png")
+st.logo("https://www.equatorialenergia.com.br/wp-content/themes/equatorial-energia-child/img/logo-white.png", size='large')
 
-st.set_page_config(layout="wide", initial_sidebar_state="collapsed")
+st.set_page_config(
+    page_title="Termômetro Reputacional Automatizado - Grupo Equatorial", 
+    page_icon=":thermometer:", 
+    layout="centered", 
+    initial_sidebar_state="collapsed", 
+    # menu_items={
+    #     'Get Help': 'https://www.extremelycoolapp.com/help',
+    #     'Report a bug': "https://www.extremelycoolapp.com/bug",
+    #     'About': "# This is a header. This is an *extremely* cool app!"
+    # },
+    )
 
 with open('style.css') as f:
     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
@@ -10,7 +20,7 @@ with open('style.css') as f:
 pages = {
     "Entrada":[
         st.Page("./views/landing_page.py", title="Página Inicial", default=True),
-        st.Page("./views/user_login.py", title="Login de Usuário"),
+        # st.Page("./views/user_login.py", title="Login de Usuário"),
         ],
     "Dashboard":[
         st.Page("./views/dash.py", title="Indicadores"),

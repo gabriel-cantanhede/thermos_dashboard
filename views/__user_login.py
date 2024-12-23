@@ -46,7 +46,7 @@ else:
                 response = conn.auth.sign_in_with_password(credentials=creds)
                 # response
                 # user_data = conn.auth.get_user.user_metadata
-                time.sleep(3)
+                time.sleep(1)
                 # st.session_state['__conn'] = conn
                 # st.write(response.user)
                 st.success(f"## Bem-vindo(a), :blue[{conn.auth.get_user().user.user_metadata["first_name"]}]!")

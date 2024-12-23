@@ -1,37 +1,63 @@
 /* Logo */
 /* Suggested by Michael Hollander -> https://discuss.streamlit.io/t/st-logo-image-size/71085/6*/
+
+/* div[data-testid=stSidebarCollapsedControl]{
+    padding: 0rem 1rem 0rem 0rem;
+} */
+
+/* hr {
+    page-break-after: always;
+    page-break-inside: avoid;
+} */
+
 img[data-testid="stLogo"] {
     position: sticky;
     height: 3rem;
-    background-size: 200px;
+    padding-bottom: 10px;
+    /* background-size: 200px; */
     background-repeat: no-repeat;
-    background-position: 4px 20px;
+    /* background-position: 1000px 20px; */
 }
-
-/*img.stLogo.st-emotion-cache-173tlbm.eczjsme7 {
-    background-image: url(https://grupoequatorialenergia-my.sharepoint.com/:i:/r/personal/gabriel_cantanhede_equatorialenergia_com_br/Documents/logo_azul.png?csf=1&web=1&e=qynVhY);
-    background-image: url(../assets/logo_azul.png);
-    background-size: 200px;
-    background-repeat: no-repeat;
-    background-position: 4px 20px;
-}*/
-
-/* Hiding st branding and menus from user */
-a._container_gzau3_1._viewerBadge_nim44_23 {
-    visibility: hidden;
-}
-div._profileContainer_gzau3_53{
-    visibility: hidden;
-}
-
-/*#MainMenu {visibility: hidden;}
-*/
 
 header[data-testid=stHeader] { /*! IMPORTANT ! This here hides the streamlit runtime header, hiding unwanted interactions from users*/
     visibility: visible;
-    background: #ffffff;
-    min-height: 4.8rem;
+    background-image: linear-gradient(to right, #e84d0f, #1a008e);
+    min-height: 5rem;
 }
+
+/* This adds a background image to the body of the streamlit app */
+[data-testid="stAppViewContainer"] {
+    background-image:url(https://energiaemdia.equatorialenergia.com.br/img/bg.webp);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: scroll; 
+    /* min-width: 1152px; */
+    padding-top: 5em;
+}
+
+/* This helps me style the container box where all the interaction with the app happens */
+[data-testid="stMainBlockContainer"] {
+    background-color: #f7f7f7;
+    /* min-width: 1152px; */
+    min-width: 50%;
+    min-height: 50% fit-content;
+    border-radius: 2rem;
+    border: 3px solid #c6c9fd;
+    padding: 1% 3% 10% 3%;
+    border-left: 0.5rem solid #003A60 !important;
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15) !important;
+}
+
+/* This lets me manipulate the aspects of the sidebar menu */
+div[data-testid="stSidebarContent"] {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: large;
+    /* color: #1a008e; */
+    /* background-color: #e84d0f; */
+    /* visibility: hidden; */
+}
+
+
 
 /*header[data-testid=stNavSectionHeader] {
     visibility: visible;
@@ -63,6 +89,7 @@ text-decoration: underline;
     min-height: 0%; was 10vh
 }
 */
+
 
 /*.
 footer {
@@ -116,7 +143,7 @@ box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15) !important;
 /* Navi Buttons */
 a[data-testid="stPageLink-NavLink"]{
     background-color: #f7f7f7;
-    border: 1px solid #0901ff;
+    border: 1px solid #0901ff5d;
     border-radius: 8px;
     padding: 1% 40% 1% 40%;
     box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15) !important;
@@ -138,10 +165,10 @@ text-transform: uppercase !important;
 }
 
 
-/* Move block container higher */
+/* Move block container higher
 div.block-container.css-18e3th9.egzxvld2 {
 margin-top: -5em;
-}
+} */
 
 
 /* Hide hamburger menu and footer */
