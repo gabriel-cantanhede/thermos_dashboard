@@ -5,10 +5,11 @@
     padding: 0rem 1rem 0rem 0rem;
 } */
 
-/* hr {
-    page-break-after: always;
-    page-break-inside: avoid;
-} */
+/* This is a hack I found online to try to fix the broken layout while printing the app view into pdf, seems to not work  */
+div.page-break {
+        page-break-after: always;
+        page-break-inside: avoid;
+    }
 
 img[data-testid="stLogo"] {
     position: sticky;
