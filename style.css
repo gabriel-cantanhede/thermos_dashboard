@@ -5,16 +5,27 @@
     padding: 0rem 1rem 0rem 0rem;
 } */
 
+<<<<<<< HEAD
 /* This is a hack I found online to try to fix the broken layout while printing the app view into pdf, seems to not work  */
 div.page-break {
         page-break-after: always;
         page-break-inside: avoid;
     }
+=======
+/* div {
+    page-break-after: always;
+    page-break-inside: avoid;
+} */
+>>>>>>> 55ede6c0fdfd925fb8456448a7505909190ac1c1
 
 img[data-testid="stLogo"] {
     position: sticky;
+    position: absolute;
+    top: 3px;
+    left: 35px;
     height: 3rem;
     padding-bottom: 10px;
+    /* padding-bottom: 10px; */
     /* background-size: 200px; */
     background-repeat: no-repeat;
     /* background-position: 1000px 20px; */
@@ -24,6 +35,19 @@ header[data-testid=stHeader] { /*! IMPORTANT ! This here hides the streamlit run
     visibility: visible;
     background-image: linear-gradient(to right, #e84d0f, #1a008e);
     min-height: 5rem;
+    height: 5rem;
+    justify-content: center;
+    border: 2px solid #83ecfe;
+    border-radius: 2rem;
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15) !important;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    left: 20px;
+}
+
+div[data-testid=stDecoration]{
+    visibility: hidden;
 }
 
 /* This adds a background image to the body of the streamlit app */
@@ -31,9 +55,11 @@ header[data-testid=stHeader] { /*! IMPORTANT ! This here hides the streamlit run
     background-image:url(https://energiaemdia.equatorialenergia.com.br/img/bg.webp);
     background-size: cover;
     background-repeat: no-repeat;
+    background-repeat: repeat-y;
     background-attachment: scroll; 
     /* min-width: 1152px; */
     padding-top: 5em;
+    padding-top: 6rem;
 }
 
 /* This helps me style the container box where all the interaction with the app happens */
@@ -41,6 +67,7 @@ header[data-testid=stHeader] { /*! IMPORTANT ! This here hides the streamlit run
     background-color: #f7f7f7;
     /* min-width: 1152px; */
     min-width: 50%;
+    min-width: 80%;
     min-height: 50% fit-content;
     border-radius: 2rem;
     border: 3px solid #c6c9fd;
