@@ -142,11 +142,11 @@ try:
                         'bar': {'color': color_today_rep, 'thickness':0.5, 'line':{'color':'black', 'width':1}}
                             }))
                 fig_today_rep.update_layout(
-                    height = 280,
+                    height = 250,
                     width=1000,
                     title=dict(
                         text='Reputação <br>(hoje vs. ontem)',
-                        automargin=True,
+                        automargin=False,
                         font=dict(color='darkblue', size=25),
                         x=0.45,
                         y=0.9,
