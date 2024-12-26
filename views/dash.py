@@ -20,7 +20,7 @@ else:
 
 try:
     # TODO Might incorporate a select box where the user chooses which data will be analyzed, and which date to look to (maybe)
-    view_group_choice = 'reputacao_grupo_15dias'
+    view_group_choice = 'reputacao_grupo_100dias'
     # date_to_query = datetime.today().date()
     df_response = dbc.load_data(conn, view_group_choice)
     # df_response['dia'] = pd.to_datetime(df_response['dia']).dt.date.astype('datetime64[ns]')
@@ -30,7 +30,7 @@ try:
     # Prepping tables and values to build visualizations
     df_big_numbers = df_response[['dia', 'favorabilidade', 'saudabilidade', 'reputacao']].copy()
 
-    view_states_choice = 'reputacao_estados_15dias'
+    view_states_choice = 'reputacao_estados_100dias'
     df_response_states = dbc.load_data(conn, view_states_choice)
     # df_big_numbers_states
 
@@ -53,7 +53,12 @@ try:
 
 
     #### Visualizations 
-    name_viz = ":chart_with_upwards_trend: KPIs de Reputação (:blue[_últimos 15 dias_])" if view_group_choice == 'reputacao_grupo_15dias' else "Reputação do Grupo"
+    name_viz = None
+    if view_group_choice == 'reputacao_grupo_15dias':
+        name_viz = ":chart_with_upwards_trend: KPIs de Reputação (:blue[_últimos 15 dias_])" 
+    else:
+        name_viz = ":chart_with_upwards_trend: KPIs de Reputação (:blue[_últimos 100 dias_])"    
+    
     st.header(name_viz, divider='blue')
 
     ### Line chart showing the trends for overall favorability over the year
@@ -131,7 +136,7 @@ try:
             xaxis=dict(title_text="Dias", ticks="outside"),
             yaxis=dict(title_text="Desempenho (%)", ticks="outside"),
             title=dict(
-                    text='Desempenho dos indicadores de reputação do Grupo',
+                    text='Desempenho dos Indicadores de Reputação do Grupo',
                     automargin=True,
                     font=dict(color='darkblue', size=20),
                     x=0.45,
@@ -291,7 +296,7 @@ try:
                 yanchor='top',
                 ))
         st.plotly_chart(fig_today_rep)
-        st.markdown("_Obs.: O valor abaixo de cada percentual é a diferença entre o indicador de hoje e o do dia anterior_")
+        st.markdown("_Obs.: O valor abaixo de cada percentual é a diferença entre o indicador de hoje e o do dia anterior._")
 
     
     st.header(":bar_chart: Big Numbers", divider='blue')
@@ -347,7 +352,7 @@ try:
                     y=df_sum_press['imprensa_negativas'],
                     text=df_sum_press['imprensa_negativas'], 
                     textposition='auto',
-                    marker_color='#DD2100',),
+                    marker_color='#e84d0f',),
                 go.Bar(
                     name='Positivas', 
                     x=df_sum_press['estado'], 
@@ -360,7 +365,7 @@ try:
                 barmode='stack', 
                 height = 550,
                 title=dict(
-                    text='Quantidade de notícias na imprensa',
+                    text='Quantidade de Notícias na Imprensa',
                     automargin=True,
                     font=dict(color='darkblue', size=20),
                     x=0.45,
@@ -385,7 +390,7 @@ try:
                     x=df_sum_digital['estado'], 
                     y=df_sum_digital['digital_negativas'],
                     text=df_sum_digital['digital_negativas'],
-                    marker_color='#DD2100', 
+                    marker_color='#e84d0f', 
                     textposition='auto'),
                 go.Bar(
                     name='Neutras', 
@@ -408,7 +413,7 @@ try:
                 barmode='stack', 
                 height = 550,
                 title=dict(
-                    text='Quantidade de menções nas mídias digitais',
+                    text='Quantidade de Menções nas Mídias Digitais',
                     automargin=True,
                     font=dict(color='darkblue', size=20),
                     x=0.45,
@@ -423,7 +428,7 @@ try:
             st.plotly_chart(fig_nums_dig)
         
         # Footnote for these charts
-        st.markdown(f"_Obs.: Valores cumulativos referentes ao período entre :blue[{min_date_num.date():%d/%m}] e :blue[{max_date_num.date():%d/%m/%y}]_")
+        st.markdown(f"_Obs.: Valores cumulativos referentes ao período entre :blue[{min_date_num.date():%d/%m}] e :blue[{max_date_num.date():%d/%m/%y}]._")
 
     ### Navigation Buttons
     with st.container():
@@ -434,7 +439,7 @@ try:
             st.page_link("views/view_group.py", label="Avançar :arrow_right:",)
 
 except Exception as e:
-    st.error("Falha ao recuperar dados do termômetro, tente logar novamente.")
+    st.error("Falha ao recuperar dados do termômetro, tente recarregar a página novamente.")
     #TODO spinning wheel with a message (redirecionando em 10s - dynamic coountdown)
     e
 #     # time.sleep(10)
