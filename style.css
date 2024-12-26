@@ -11,12 +11,11 @@
 } */
 
 img[data-testid="stLogo"] {
-    position: sticky;
     position: absolute;
     top: 3px;
     left: 35px;
     height: 3rem;
-    padding-bottom: 10px;
+    padding-bottom: 1px;
     /* padding-bottom: 10px; */
     /* background-size: 200px; */
     background-repeat: no-repeat;
@@ -46,36 +45,34 @@ div[data-testid=stDecoration]{
 [data-testid="stAppViewContainer"] {
     background-image:url(https://energiaemdia.equatorialenergia.com.br/img/bg.webp);
     background-size: cover;
-    background-repeat: no-repeat;
     background-repeat: repeat-y;
     background-attachment: scroll; 
     /* min-width: 1152px; */
-    padding-top: 5em;
-    padding-top: 6rem;
+    padding-top: 6em;
 }
 
 /* This helps me style the container box where all the interaction with the app happens */
 [data-testid="stMainBlockContainer"] {
     background-color: #f7f7f7;
     /* min-width: 1152px; */
-    min-width: 50%;
     min-width: 80%;
     min-height: 50% fit-content;
     border-radius: 2rem;
     border: 3px solid #c6c9fd;
-    padding: 1% 3% 10% 3%;
+    padding: 1% 3% 3% 3%;
+    /* padding-bottom: 1rem; */
     border-left: 0.5rem solid #003A60 !important;
     box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15) !important;
 }
 
 /* This lets me manipulate the aspects of the sidebar menu */
-div[data-testid="stSidebarContent"] {
+/* div[data-testid="stSidebarContent"] {
     font-family: Arial, Helvetica, sans-serif;
-    font-size: large;
-    /* color: #1a008e; */
-    /* background-color: #e84d0f; */
-    /* visibility: hidden; */
-}
+    font-size: large; 
+    color: #1a008e;
+    background-color: #e84d0f;
+    visibility: hidden;
+} */
 
 
 
@@ -131,22 +128,23 @@ div.st-emotion-cache-4uzi61.e1f1d6gn0{
     border-radius: 8px;
     /*box-shadow: 0 0.15rem 1.75rem 0 rgba(130, 131, 134, 0.094) !important;*/
 }
-/* this one changes the background color just for the textual data in the view_group and view_states pages */
-#root > div:nth-child(1) > div.withScreencast > div > div > section.stMain.st-emotion-cache-bm2z3a.ea3mdgi8 > div.stMainBlockContainer.block-container.st-emotion-cache-1jicfl2.ea3mdgi5 > div > div > div > div.stHorizontalBlock.st-emotion-cache-ocqkz7.e1f1d6gn5 > div:nth-child(1) > div > div > div > div{
-    border: 1px solid #000000;
-    border-radius: 8px;
-    padding: 5 5 5 5;
-    /*box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15) !important;*/
-    background-color: #26c4fd41;
-}
 
-#root > div:nth-child(1) > div.withScreencast > div > div > section.stMain.st-emotion-cache-bm2z3a.ea3mdgi8 > div.stMainBlockContainer.block-container.st-emotion-cache-1jicfl2.ea3mdgi5 > div > div > div > div.stHorizontalBlock.st-emotion-cache-ocqkz7.e1f1d6gn5 > div:nth-child(2) > div > div > div > div{
+/* div.stVerticalBlock.st-emotion-cache-o7tx2m.e1f1d6gn2{
     border: 1px solid #000000;
     border-radius: 8px;
     padding: 5 5 5 5;
-    /*box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15) !important;*/
+    background-color: #26c4fd41;
+} */
+
+/* this one changes the background color just for the textual data in the view_group and view_states pages */
+
+/* #root > div:nth-child(1) > div.withScreencast > div > div > section.stMain.st-emotion-cache-bm2z3a.ea3mdgi8 > div.stMainBlockContainer.block-container.st-emotion-cache-1jicfl2.ea3mdgi5 > div > div > div > div.stHorizontalBlock.st-emotion-cache-ocqkz7.e1f1d6gn5 > div:nth-child(2) > div > div > div > div{
+    border: 1px solid #000000;
+    border-radius: 8px;
+    padding: 5 5 5 5;
     background-color: #fdef2641;
-}
+    background-color: #0901fa3b;
+} */
 
 /* Card */
 /* Adapted from https://startbootstrap.com/theme/sb-admin-2 */
@@ -185,25 +183,4 @@ text-transform: uppercase !important;
 }
 
 
-/* Move block container higher
-div.block-container.css-18e3th9.egzxvld2 {
-margin-top: -5em;
-} */
 
-
-/* Hide hamburger menu and footer */
-div.css-r698ls.e8zbici2 {
-display: none;
-}
-
-footer.css-ipbk5a.egzxvld4 {
-display: none;
-}
-
-footer.css-12gp8ed.eknhn3m4 {
-display: none;
-}
-
-div.vg-tooltip-element {
-display: none;
-}

@@ -162,14 +162,14 @@ try:
                     st.markdown("### :thumbsup: **:blue[Pontos Positivos]**:")
                     for index, row in df_textual_today.iterrows():
                         dict_ppos = eval(row['pontos_positivos'].replace('\\n', ' '))
-                        f_string = f"**Imprensa**: {dict_ppos['press']} <br>**Digital**: {dict_ppos['dig']}"
+                        f_string = f":blue-background[**Imprensa**: {dict_ppos['press']} <br>**Digital**: {dict_ppos['dig']}]"
                         st.markdown(f_string, unsafe_allow_html=True)
             with col_neg:
                 with st.container(border=True):
                     st.markdown("### :warning: **:orange[Pontos de Atenção]**: ")
                     for index, row in df_textual_today.iterrows():
                         dict_ppos = eval(row['pontos_atencao'].replace('\\n', ' '))
-                        f_string = f"**Imprensa**: {dict_ppos['press']} <br>**Digital**: {dict_ppos['dig']}"
+                        f_string = f":orange-background[**Imprensa**: {dict_ppos['press']} <br>**Digital**: {dict_ppos['dig']}]"
                         st.markdown(f_string, unsafe_allow_html=True)
         
     ### Navigation Buttons
@@ -179,6 +179,9 @@ try:
             st.page_link("views/view_group.py", label=":arrow_left: Voltar",)
         # with nav_next:
         #     st.page_link("views/view_states.py", label="Avançar :arrow_right:",)
+    
+    # Hacky way of including a custom footer in each page
+    misc.write_footer()
 
 except Exception as e:
     st.error("Falha ao recuperar dados do termômetro, tente logar novamente.")

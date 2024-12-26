@@ -120,11 +120,11 @@ try:
                     'bar': {'color': color_today_rep, 'thickness':0.5, 'line':{'color':'black', 'width':1}}
                         }))
             fig_today_rep.update_layout(
-                height = 280,
+                height = 250,
                 width=1000,
                 title=dict(
                     text='Reputação <br>(hoje vs. ontem)',
-                    automargin=True,
+                    automargin=False,
                     font=dict(color='darkblue', size=25),
                     x=0.45,
                     y=0.9,
@@ -134,23 +134,41 @@ try:
             st.plotly_chart(fig_today_rep)
 
 
+    styles_positive = """{
+        border: 1px solid #6b6b6bb3;
+        border-radius: 8px;
+        display: flex;
+        box-sizing: border-box;
+        padding-right: calc(-1px + 5rem);
         
+        
+        background-color: #0901fa3b;
+    }
+    ul {
+        margin: 0px 0px 1rem;
+        padding: 0px 0px 1rem;
+        text-wrap: inherit;
+        word-wrap: break-word;
+    }
+    """
+
     col_pos, col_neg = st.columns([0.5, 0.5])
     with col_pos:
+        # with stylable_container(key='positive_block', css_styles=styles_positive):
         with st.container(border=True):
             st.markdown("### :thumbsup: **:blue[Pontos Positivos]**:")
             for index, row in df_textual_today.iterrows():
                 dict_ppos = eval(row['pontos_positivos'].replace('\\n', ' '))
-                f_string = f"- **{row['estado']} -** **_Imprensa_**: {dict_ppos['press']} | **_Digital_**: {dict_ppos['dig']}"
+                f_string = f"- :blue-background[**{row['estado']} -** **_Imprensa_**: {dict_ppos['press']} | **_Digital_**: {dict_ppos['dig']}]"
                 st.write(f_string)
     with col_neg:
         with st.container(border=True):
             st.markdown("### :warning: **:orange[Pontos de Atenção]**: ")
             for index, row in df_textual_today.iterrows():
                 dict_ppos = eval(row['pontos_atencao'].replace('\\n', ' '))
-                f_string = f"- **{row['estado']} -** **_Imprensa_**: {dict_ppos['press']} | **_Digital_**: {dict_ppos['dig']}"
+                f_string = f"- :orange-background[**{row['estado']} -** **_Imprensa_**: {dict_ppos['press']} | **_Digital_**: {dict_ppos['dig']}]"
                 st.write(f_string)
-    
+
     ### Navigation Buttons
     with st.container():
         nav_prev, _, nav_next = st.columns([0.4,0.2,0.4], vertical_alignment='bottom')
@@ -158,6 +176,9 @@ try:
             st.page_link("views/dash.py", label=":arrow_left: Voltar",)
         with nav_next:
             st.page_link("views/view_states.py", label="Avançar :arrow_right:",)
+    
+    # Hacky way of including a custom footer in each page
+    misc.write_footer()
 
 except Exception as e:
     st.error("Falha ao recuperar dados do termômetro, tente logar novamente.")

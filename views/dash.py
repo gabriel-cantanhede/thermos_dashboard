@@ -21,11 +21,7 @@ else:
 try:
     # TODO Might incorporate a select box where the user chooses which data will be analyzed, and which date to look to (maybe)
     view_group_choice = 'reputacao_grupo_100dias'
-    # date_to_query = datetime.today().date()
     df_response = dbc.load_data(conn, view_group_choice)
-    # df_response['dia'] = pd.to_datetime(df_response['dia']).dt.date.astype('datetime64[ns]')
-    # st.write(df_response) # OG Debugging
-
 
     # Prepping tables and values to build visualizations
     df_big_numbers = df_response[['dia', 'favorabilidade', 'saudabilidade', 'reputacao']].copy()
@@ -52,7 +48,7 @@ try:
     color_today_saud = misc.pick_color(today_saud/100)
 
 
-    #### Visualizations 
+    #### Header from the line graph
     name_viz = None
     if view_group_choice == 'reputacao_grupo_15dias':
         name_viz = ":chart_with_upwards_trend: KPIs de Reputação (:blue[_últimos 15 dias_])" 
@@ -63,7 +59,7 @@ try:
 
     ### Line chart showing the trends for overall favorability over the year
     with st.container(border=True):
-        #### Visualizations 
+
         ### Line chart showing the trends for overall favorability over the year
         count_days = df_big_numbers['dia'].count()
         fig_line = go.Figure(
@@ -185,7 +181,7 @@ try:
 
 
 
-    st.header(f':bar_chart: Indicadores do dia :blue[{current_day_in_data:%d/%m/%y}] :gray[(_hoje vs. ontem_)]', divider='blue')
+    st.header(f':bar_chart: Indicadores do dia :blue[{current_day_in_data:%d/%m/%y}]', divider='blue')
     with st.container(border=True):
         col_fav, col_saud = st.columns([0.5, 0.5], gap='small', vertical_alignment='center')
         ## Favorability Gauge 
@@ -296,7 +292,7 @@ try:
                 yanchor='top',
                 ))
         st.plotly_chart(fig_today_rep)
-        st.markdown("_Obs.: O valor abaixo de cada percentual é a diferença entre o indicador de hoje e o do dia anterior._")
+        st.markdown("_Obs.: O valor abaixo de cada percentual é a diferença entre o indicador do dia em questão e o do dia anterior._")
 
     
     st.header(":bar_chart: Big Numbers", divider='blue')
@@ -437,11 +433,14 @@ try:
         #     st.page_link("views/dash.py", label=":arrow_left: Voltar",)
         with nav_next:
             st.page_link("views/view_group.py", label="Avançar :arrow_right:",)
+    
+    # Hacky way of including a custom footer in each page
+    misc.write_footer()
 
 except Exception as e:
     st.error("Falha ao recuperar dados do termômetro, tente recarregar a página novamente.")
     #TODO spinning wheel with a message (redirecionando em 10s - dynamic coountdown)
-    e
+    st.error(e)
 #     # time.sleep(10)
 #     # st.switch_page('views/user_login.py')
 

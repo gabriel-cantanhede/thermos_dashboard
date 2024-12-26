@@ -1,5 +1,6 @@
 import streamlit as st
 from datetime import datetime, timezone
+import control.misc_funcs as misc
 
 # # My custom funcs and py files
 # import control.misc_funcs as misc
@@ -26,3 +27,6 @@ with st.container():
     _, _, nav_next = st.columns([0.4,0.2,0.4], vertical_alignment='bottom')
     with nav_next:
         st.page_link("views/dash.py", label="Avançar 	:arrow_right:",)
+
+# Hacky way of including a custom footer in each page
+misc.write_footer()
