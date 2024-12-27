@@ -209,7 +209,7 @@ try:
                         }))
             fig_today_fav.update_layout(
                 height = 250,
-                width=1000,
+                # width=1000,
                 title=dict(
                     text='Favorabilidade',
                     automargin=True,
@@ -245,7 +245,7 @@ try:
                         }))
             fig_today_saud.update_layout(
                 height= 250,
-                width= 1000,
+                # width= 1000,
                 title=dict(
                     text='Saudabilidade',
                     automargin=True,
@@ -280,8 +280,8 @@ try:
                 'bar': {'color': color_today_rep, 'thickness':0.5, 'line':{'color':'black', 'width':1}}
                     }))
         fig_today_rep.update_layout(
-            height = 280,
-            width=1000,
+            height = 250,
+            # width=1000,
             title=dict(
                 text='Reputação',
                 automargin=True,
@@ -359,12 +359,12 @@ try:
                 ])
             fig_nums_press.update_layout(
                 barmode='stack', 
-                height = 550,
+                # height = 500,
                 title=dict(
                     text='Quantidade de Notícias na Imprensa',
                     automargin=True,
                     font=dict(color='darkblue', size=20),
-                    x=0.45,
+                    x=0.5,
                     y=0.9,
                     xanchor='center',
                     yanchor='top',
@@ -407,12 +407,12 @@ try:
 
             fig_nums_dig.update_layout(
                 barmode='stack', 
-                height = 550,
+                # height = 500,
                 title=dict(
                     text='Quantidade de Menções nas Mídias Digitais',
                     automargin=True,
                     font=dict(color='darkblue', size=20),
-                    x=0.45,
+                    x=0.5,
                     y=0.9,
                     xanchor='center',
                     yanchor='top',
