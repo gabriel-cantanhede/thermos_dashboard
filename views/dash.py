@@ -370,7 +370,7 @@ try:
                     yanchor='top',
                     ),
                 yaxis=dict(title="Notícias"),
-                xaxis=dict(title='Estados'),
+                xaxis=dict(title='Distribuidoras'),
                 legend=dict(title='Notícias'),
                 )
             
@@ -418,7 +418,7 @@ try:
                     yanchor='top',
                     ),
                 yaxis=dict(title="Menções"),
-                xaxis=dict(title='Estados'),
+                xaxis=dict(title='Distribuidoras'),
                 legend=dict(title='Menções'),
                 )
             st.plotly_chart(fig_nums_dig)
