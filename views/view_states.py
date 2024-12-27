@@ -18,7 +18,7 @@ else:
     conn = st.session_state['__conn']
 
 # Page Header
-st.header(":thermometer: Informe Reputacional - Visão Estados")
+st.header(":thermometer: Informe Reputacional - Visão Distribuidoras")
 
 try:
     ## Preparing data - querying the adequate view table
