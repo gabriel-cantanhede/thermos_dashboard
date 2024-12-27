@@ -18,9 +18,9 @@ st.markdown("# :thermometer: :blue[Bem-vindo ao Termômetro Reputacional Automá
 
 with st.container(border=True):
     st.markdown(
-        """Para monitorar e aprimorar continuamente a nossa reputação, apresentamos o **Termômetro Reputacional automatizado**! <br>
-        Esta ferramenta foi desenvolvida para proporcionar uma solução prática e eficiente no acompanhamento e avaliação da reputação,
-        com base em indicadores coletados da imprensa e das plataformas digitais. <br><br>**Clique no botão abaixo para acessar o app**!
+        """Para monitorar e aprimorar continuamente a reputação do :blue[**Grupo Equatorial**], apresentamos o **Termômetro Reputacional, _versão automatizada_**! <br>
+        Esta ferramenta foi desenvolvida para proporcionar uma solução prática e eficiente no acompanhamento e avaliação da reputação do :blue[**Grupo**],
+        com base em dados coletados das mídias tradicionais e digitais. <br><br>**Clique no botão :blue-background[_Avançar_] para acessar o app**!
         """, unsafe_allow_html=True)
 
 #### Navigation buttons ###
