@@ -26,7 +26,7 @@ if curr_user:
     with st.container():
         _, _, nav_next_logged = st.columns([0.4,0.2,0.4], vertical_alignment='bottom')
         with nav_next_logged:
-            st.page_link("views/user_login.py", label="Avançar 	:arrow_right:",)
+            st.page_link("views/dash.py", label="Avançar 	:arrow_right:",)
 
 else:
     #######

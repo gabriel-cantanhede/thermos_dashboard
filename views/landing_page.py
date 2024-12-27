@@ -30,7 +30,7 @@ with st.container(border=True):
 with st.container():
     _, _, nav_next = st.columns([0.4,0.2,0.4], vertical_alignment='bottom')
     with nav_next:
-        st.page_link("views/dash.py", label="Avançar 	:arrow_right:",)
+        st.page_link("views/user_login.py", label="Avançar 	:arrow_right:",)
 
 # Hacky way of including a custom footer in each page
 misc.write_footer()

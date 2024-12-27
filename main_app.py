@@ -20,7 +20,7 @@ with open('style.css') as f:
 pages = {
     "Entrada":[
         st.Page("./views/landing_page.py", title="Página Inicial", default=True),
-        # st.Page("./views/user_login.py", title="Login de Usuário"),
+        st.Page("./views/user_login.py", title="Login de Usuário"),
         ],
     "Dashboard":[
         st.Page("./views/dash.py", title="Indicadores"),

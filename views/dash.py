@@ -34,6 +34,7 @@ try:
     current_day_in_data = df_big_numbers.iat[0,0].date()
     # current_day_in_data
 
+    ### Daily Metrics ####
     ## Reputation
     today_rep = df_big_numbers.iloc[0]['reputacao']
     yesterday_rep = df_big_numbers.iloc[1]['reputacao']
@@ -46,6 +47,22 @@ try:
     today_saud = df_big_numbers.iloc[0]['saudabilidade']
     yesterday_saud = df_big_numbers.iloc[1]['saudabilidade']
     color_today_saud = misc.pick_color(today_saud/100)
+
+    ### Weekly Metrics ####
+    ## Reputation
+    this_week_rep = df_big_numbers.iloc[0:5]['reputacao'].mean()
+    past_week_rep = df_big_numbers.iloc[5:10]['reputacao']
+    color_week_rep = misc.pick_color(this_week_rep/100)
+    
+    ## Favorability
+    this_week_fav = df_big_numbers.iloc[0:5]['favorabilidade'].mean()
+    past_week_fav = df_big_numbers.iloc[5:10]['favorabilidade']
+    color_week_fav = misc.pick_color(this_week_fav/100)
+
+    ## Saudability
+    this_week_saud = df_big_numbers.iloc[0:5]['saudabilidade'].mean()
+    past_week_saud = df_big_numbers.iloc[5:10]['saudabilidade']
+    color_week_saud = misc.pick_color(this_week_saud/100)
 
 
     #### Header from the line graph
@@ -183,7 +200,7 @@ try:
 
     st.header(f':bar_chart: Indicadores do dia :blue[{current_day_in_data:%d/%m/%y}]', divider='blue')
     with st.container(border=True):
-        col_fav, col_saud = st.columns([0.5, 0.5], gap='small', vertical_alignment='center')
+        col_fav, col_saud = st.columns([0.5, 0.5], gap='small', vertical_alignment='top')
         ## Favorability Gauge 
         with col_fav:
             # st.subheader("Favorabilidade")
