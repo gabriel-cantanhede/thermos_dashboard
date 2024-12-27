@@ -34,7 +34,7 @@ try:
         #     placeholder="Selecione uma opção",
         # )
         multisel_place = st.multiselect(
-            label="Selecione um Estado:",
+            label="Selecione a Distribuidora:",
             options=("AL", "AP", "GO", "MA", "PA", "PI", "RS"),
             default=("AL", "AP", "GO", "MA", "PA", "PI", "RS"),
             placeholder="Selecione quantas distribuidoras deseja ver",
