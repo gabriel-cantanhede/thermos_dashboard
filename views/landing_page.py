@@ -21,6 +21,7 @@ with st.container(border=True):
         """Para monitorar e aprimorar continuamente a reputação do :blue[**Grupo Equatorial**], apresentamos o **Termômetro Reputacional, _versão automatizada_**! <br>
         Esta ferramenta foi desenvolvida para proporcionar uma solução prática e eficiente no acompanhamento e avaliação da reputação do :blue[**Grupo**],
         com base em dados coletados das mídias tradicionais e digitais. <br><br>**Clique no botão :blue-background[_Avançar_] para acessar o app**!
+        <br><br> *Obs.: Para solicitar acesso ao app, entre em contato com o [Time de Inteligência de Dados](mailto:gabriel.cantanhede@equatorialenergia.com.br)*.
         """, unsafe_allow_html=True)
 
 #### Navigation buttons ###
