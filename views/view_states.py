@@ -11,6 +11,7 @@ import control.db_connection as dbc
 
 
 # Sanity check on the db connection object
+conn = None
 if "__conn" not in st.session_state:
     conn = dbc.init_connection()
     st.session_state['__conn'] = conn
@@ -21,8 +22,10 @@ else:
 st.header(":thermometer: Informe Reputacional - Visão Distribuidoras")
 
 try:
+    # logged_user = conn.auth.get_user()
+    # st.write(logged_user.email) 
     ## Preparing data - querying the adequate view table
-    view_choice = 'reputacao_estados_15dias'
+    view_choice = 'reputacao_estados_100dias'
     df_response = dbc.load_data(conn, view_choice)
 
     # User input section
@@ -153,7 +156,7 @@ try:
                         xanchor='center',
                         yanchor='top',
                         ))
-                st.plotly_chart(fig_today_rep)
+                st.plotly_chart(fig_today_rep, key=f'plot-{place}')
 
             ## Textual data - Positive Observations and Warnings
             col_pos, col_neg = st.columns([0.5, 0.5])
@@ -185,6 +188,4 @@ try:
 
 except Exception as e:
     st.error("Falha ao recuperar dados do termômetro, tente logar novamente.")
-    # st.write(e)
-    # time.sleep(5) #TODO Enable these lines before shipping
-    # st.switch_page('views/user_login.py')
+    misc.redirect_to_login(10)

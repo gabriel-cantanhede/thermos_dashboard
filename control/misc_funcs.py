@@ -1,5 +1,5 @@
 import streamlit as st
-from time import sleep
+import time
 
 # def showProgressBar():
 #     progress_text = "Operação em progresso. Aguarde..."
@@ -29,3 +29,12 @@ def write_footer(logo_style='blue'):
         Diretoria de Clientes, Serviços e Inovação <br> <br>
         <img src={img_link} alt='logo_eqtl' width=150px>""",
         unsafe_allow_html=True)
+
+
+def redirect_to_login(timer:int):
+    counter = st.empty()
+    for secs in range(timer,0,-1):
+        # mm, ss = secs//60, secs%60
+        counter.info(f"#### Redirecionando para a página de login em {secs:02d}")
+        time.sleep(1)
+    st.switch_page('views/user_login.py')

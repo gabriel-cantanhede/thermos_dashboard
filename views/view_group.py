@@ -10,6 +10,7 @@ import control.misc_funcs as misc
 import control.db_connection as dbc
 
 # Sanity check on the db connection object
+conn = None
 if "__conn" not in st.session_state:
     conn = dbc.init_connection()
     st.session_state['__conn'] = conn
@@ -20,7 +21,7 @@ else:
 st.header(":thermometer: Informe Reputacional - Visão Grupo")
 try:
     # Querying the adequate view table
-    view_choice = 'reputacao_estados_15dias'
+    view_choice = 'reputacao_estados_100dias'
     df_response = dbc.load_data(conn, view_choice)
     # df_response
 
@@ -182,28 +183,4 @@ try:
 
 except Exception as e:
     st.error("Falha ao recuperar dados do termômetro, tente logar novamente.")
-    time.sleep(5)
-    st.switch_page('views/user_login.py')
-
-### Leftover Visualizations
-# #displaying the thermometer in shape of a gauge
-    # gauge_fig = go.Figure(go.Indicator(
-    #     mode = "gauge+number",
-    #     value = input_num,
-    #     number= {"suffix":"%"},
-    #     title = {'text': "Como estamos hoje?"},
-    #     uid="favorability_avg",
-    #     gauge = {
-    #         'shape':'angular',
-    #         'axis': {'range': [0, 100], 'tickvals':[0,35,70,100]}, # to place text instead of numbers: ticktext:[text list]
-    #         'bar': {'color': bullet_color, 'thickness':0.8, 'line':{'color':'black', 'width':2}},
-    #         'bordercolor':'white',
-    #         'borderwidth':1,
-    #         'steps': [
-    #             {'range': [0, 35], 'color': 'red'},
-    #             {'range': [35, 70], 'color': 'yellow'},
-    #             {'range': [70, 100], 'color': 'green'}
-    #         ]},
-    #     ))
-    # gauge_fig.update_layout(height=300, width=300)
-    # st.plotly_chart(gauge_fig, use_container_width=False)
+    misc.redirect_to_login(10)

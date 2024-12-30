@@ -31,8 +31,9 @@ if curr_user:
         with nav_next_logged:
             st.page_link("views/dash.py", label="Avançar 	:arrow_right:",)
         
-        # My clever way of setting up my custom footer
-        misc.write_footer()
+    # My clever way of setting up my custom footer
+    misc.write_footer()
+
 else:
     ####### Regular Login flow
     st.markdown("##	:bust_in_silhouette: :blue[Login de Usuário]")
@@ -61,10 +62,9 @@ else:
                     _, _, nav_next = st.columns([0.4,0.2,0.4], vertical_alignment='bottom')
                     with nav_next:
                         st.page_link("views/dash.py", label="Avançar 	:arrow_right:",)
-                    
-                    # My clever way of setting up my custom footer
-                    misc.write_footer()
 
             except AuthApiError as auth_error:
-                st.error("Erro ao tentar fazer login. Por favor, tente novamente.")
-                auth_error   
+                st.error("Erro ao tentar fazer login. Por favor, tente novamente.") 
+        
+    # My clever way of setting up my custom footer
+    misc.write_footer()

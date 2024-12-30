@@ -19,9 +19,14 @@ else:
     conn = st.session_state['__conn']
 
 try:
+    # logged_user = conn.auth.get_user()
+    # st.write(logged_user.user.email) 
+    
     # TODO Might incorporate a select box where the user chooses which data will be analyzed, and which date to look to (maybe)
     view_group_choice = 'reputacao_grupo_100dias'
     df_response = dbc.load_data(conn, view_group_choice)
+
+    # st.write(df_response)
 
     # Prepping tables and values to build visualizations
     df_big_numbers = df_response[['dia', 'favorabilidade', 'saudabilidade', 'reputacao']].copy()
@@ -32,6 +37,7 @@ try:
 
     # Retrieving most recent day in the dataset
     current_day_in_data = df_big_numbers.iat[0,0].date()
+    five_days_before_data = df_big_numbers.iat[4,0].date()
     # current_day_in_data
 
     ### Daily Metrics ####
@@ -51,17 +57,17 @@ try:
     ### Weekly Metrics ####
     ## Reputation
     this_week_rep = df_big_numbers.iloc[0:5]['reputacao'].mean()
-    past_week_rep = df_big_numbers.iloc[5:10]['reputacao']
+    past_week_rep = df_big_numbers.iloc[5:10]['reputacao'].mean()
     color_week_rep = misc.pick_color(this_week_rep/100)
     
     ## Favorability
     this_week_fav = df_big_numbers.iloc[0:5]['favorabilidade'].mean()
-    past_week_fav = df_big_numbers.iloc[5:10]['favorabilidade']
+    past_week_fav = df_big_numbers.iloc[5:10]['favorabilidade'].mean()
     color_week_fav = misc.pick_color(this_week_fav/100)
 
     ## Saudability
     this_week_saud = df_big_numbers.iloc[0:5]['saudabilidade'].mean()
-    past_week_saud = df_big_numbers.iloc[5:10]['saudabilidade']
+    past_week_saud = df_big_numbers.iloc[5:10]['saudabilidade'].mean()
     color_week_saud = misc.pick_color(this_week_saud/100)
 
 
@@ -194,10 +200,10 @@ try:
         # Reversing the trace order, for viz purposes
         # fig_line = fig_line.select_traces[:-1]
 
-        st.plotly_chart(fig_line)
+        st.plotly_chart(fig_line, key='overall_line_chart')
 
 
-
+    ##### Daily metrics ##### 
     st.header(f':bar_chart: Indicadores do dia :blue[{current_day_in_data:%d/%m/%y}]', divider='blue')
     with st.container(border=True):
         col_fav, col_saud = st.columns([0.5, 0.5], gap='small', vertical_alignment='top')
@@ -236,7 +242,7 @@ try:
                     xanchor='center',
                     yanchor='top',))
                 
-            st.plotly_chart(fig_today_fav)
+            st.plotly_chart(fig_today_fav, key='today_fav_chart')
 
             # "# st.subheader("Saudabilidade")
         with col_saud:
@@ -272,7 +278,7 @@ try:
                     xanchor='center',
                     yanchor='top',))
 
-            st.plotly_chart(fig_today_saud) 
+            st.plotly_chart(fig_today_saud, key='today_saud_chart') 
 
         ## Reputation Gauge
         # st.markdown("### Reputação <br>(hoje vs. ontem)",unsafe_allow_html=True)
@@ -308,8 +314,125 @@ try:
                 xanchor='center',
                 yanchor='top',
                 ))
-        st.plotly_chart(fig_today_rep)
+        st.plotly_chart(fig_today_rep, key='today_rep_chart')
         st.markdown("_Obs.: O valor abaixo de cada percentual é a diferença entre o indicador do dia em questão e o do dia anterior._")
+
+    
+    #### Weekly Metrics
+
+    st.header(f':bar_chart: Indicadores da Semana', divider='blue')
+    with st.container(border=True):
+        col_fav, col_saud = st.columns([0.5, 0.5], gap='small', vertical_alignment='top')
+        ## Favorability Gauge 
+        with col_fav:
+            # st.subheader("Favorabilidade")
+            fig_week_fav = go.Figure(go.Indicator(
+                mode = "number+gauge+delta", value = this_week_fav,
+                domain = {'x': [0.1, 1], 'y': [0, 1]},
+                # title = {'text' :"<b>Reputação<br> (hoje <br>vs. <br>ontem)</b> ", 'font':{'size':20}},
+                delta = {'reference': past_week_fav, "valueformat":'+.2'},
+                number = {'suffix':'%','font':{'size':60}, 'font':{'color':color_week_fav}},
+                gauge = {
+                    'shape': "bullet",
+                    'axis': {'range': [None, 100], 'tickvals': [0,35,70,100]},
+                    # 'threshold': {
+                    #     'line': {'color': "black", 'width': 2},
+                    #     'thickness': 0.75,
+                    #     'value': yesterday_fav},
+                    'steps': [
+                        {'range': [0, 35], 'color': "#F58A67"},
+                        {'range': [35, 70], 'color': "#F0D16E"},
+                        {'range': [70, 100], 'color': "#89F067"},
+                        ],
+                    'bar': {'color': color_week_fav, 'thickness':0.5, 'line':{'color':'black', 'width':1}}
+                        }))
+            fig_week_fav.update_layout(
+                height = 250,
+                # width=1000,
+                title=dict(
+                    text='Favorabilidade',
+                    automargin=True,
+                    font=dict(color='darkblue', size=25),
+                    x=0.45,
+                    y=0.85,
+                    xanchor='center',
+                    yanchor='top',))
+                
+            st.plotly_chart(fig_week_fav, key='week_fav_chart')
+
+            # "# st.subheader("Saudabilidade")
+        with col_saud:
+            fig_week_saud = go.Figure(go.Indicator(
+                mode = "number+gauge+delta", value = this_week_saud,
+                domain = {'x': [0.1, 1], 'y': [0, 1]},
+                # title = {'text' :"<b>Reputação<br> (hoje <br>vs. <br>ontem)</b> ", 'font':{'size':20}},
+                delta = {'reference': past_week_saud, "valueformat":'+.2'},
+                number = {'suffix':'%','font':{'size':60}, 'font':{'color':color_week_saud}},
+                gauge = {
+                    'shape': "bullet",
+                    'axis': {'range': [0, 100], 'tickvals': [0,35,70,100],},
+                    # 'threshold': {
+                    #     'line': {'color': "black", 'width': 2},
+                    #     'thickness': 0.75,
+                    #     'value': yesterday_fav},
+                    'steps': [
+                        {'range': [0, 35], 'color': "#F58A67"},
+                        {'range': [35, 70], 'color': "#F0D16E"},
+                        {'range': [70, 100], 'color': "#89F067"},
+                        ],
+                    'bar': {'color': color_week_saud, 'thickness':0.5, 'line':{'color':'black', 'width':1}}
+                        }))
+            fig_week_saud.update_layout(
+                height= 250,
+                # width= 1000,
+                title=dict(
+                    text='Saudabilidade',
+                    automargin=True,
+                    font=dict(color='darkblue', size=25),
+                    x=0.45,
+                    y=0.85,
+                    xanchor='center',
+                    yanchor='top',))
+
+            st.plotly_chart(fig_week_saud, key='week_saud_chart') 
+
+        ## Reputation Gauge
+        # st.markdown("### Reputação <br>(hoje vs. ontem)",unsafe_allow_html=True)
+        fig_week_rep = go.Figure(go.Indicator(
+            mode = "number+gauge+delta", value = this_week_rep,
+            domain = {'x': [0.1, 1], 'y': [0, 1]},
+            # title = {'text' :"<b>Reputação<br> (hoje <br>vs. <br>ontem)</b> ", 'font':{'size':20}},
+            delta = {'reference': past_week_rep, "valueformat":'+.2'},
+            number = {'suffix':'%','font':{'size':60}, 'font':{'color':color_week_rep}},
+            gauge = {
+                'shape': "bullet",
+                'axis': {'range': [None, 100], 'tickvals': [0,35,70,100]},
+                # 'threshold': {
+                #     'line': {'color': "black", 'width': 2},
+                #     'thickness': 0.75,
+                #     'value': yesterday_fav},
+                'steps': [
+                    {'range': [0, 35], 'color': "#F58A67"},
+                    {'range': [35, 70], 'color': "#F0D16E"},
+                    {'range': [70, 100], 'color': "#89F067"},
+                    ],
+                'bar': {'color': color_week_rep, 'thickness':0.5, 'line':{'color':'black', 'width':1}}
+                    }))
+        fig_week_rep.update_layout(
+            height = 250,
+            # width=1000,
+            title=dict(
+                text='Reputação',
+                automargin=True,
+                font=dict(color='darkblue', size=30),
+                x=0.45,
+                y=0.85,
+                xanchor='center',
+                yanchor='top',
+                ))
+        st.plotly_chart(fig_today_rep, key='week_rep_chart')
+        st.markdown(f"_Obs.: Os indicadores acima são a média móvel da reputação do Grupo, levando em consideração os últimos \
+             cinco dias úteis (referente ao período entre :blue[{five_days_before_data:%d/%m}] e :blue[{current_day_in_data:%d/%m/%y}])._")
 
     
     st.header(":bar_chart: Big Numbers", divider='blue')
@@ -376,7 +499,7 @@ try:
                 ])
             fig_nums_press.update_layout(
                 barmode='stack', 
-                # height = 500,
+                height = 500,
                 title=dict(
                     text='Quantidade de Notícias na Imprensa',
                     automargin=True,
@@ -391,7 +514,7 @@ try:
                 legend=dict(title='Notícias'),
                 )
             
-            st.plotly_chart(fig_nums_press)
+            st.plotly_chart(fig_nums_press, key='nums_press_chart')
              
         with col_bignum2:
             # st.markdown("### Digital")
@@ -424,7 +547,7 @@ try:
 
             fig_nums_dig.update_layout(
                 barmode='stack', 
-                # height = 500,
+                height = 500,
                 title=dict(
                     text='Quantidade de Menções nas Mídias Digitais',
                     automargin=True,
@@ -438,7 +561,7 @@ try:
                 xaxis=dict(title='Distribuidoras'),
                 legend=dict(title='Menções'),
                 )
-            st.plotly_chart(fig_nums_dig)
+            st.plotly_chart(fig_nums_dig, key='nums_dig_chart')
         
         # Footnote for these charts
         st.markdown(f"_Obs.: Valores cumulativos referentes ao período entre :blue[{min_date_num.date():%d/%m}] e :blue[{max_date_num.date():%d/%m/%y}]._")
@@ -456,8 +579,6 @@ try:
 
 except Exception as e:
     st.error("Falha ao recuperar dados do termômetro, tente recarregar a página novamente.")
-    #TODO spinning wheel with a message (redirecionando em 10s - dynamic coountdown)
-    st.error(e)
-#     # time.sleep(10)
-#     # st.switch_page('views/user_login.py')
+    misc.redirect_to_login(10)
+    # st.error(e)
 
