@@ -1,9 +1,11 @@
 import streamlit as st
-import control.db_connection as dbc
 import time
 from datetime import datetime, timezone
 from supabase import AuthApiError
-from streamlit_extras.stylable_container import stylable_container
+# from streamlit_extras.stylable_container import stylable_container
+#### Importing my custom libs
+import control.db_connection as dbc
+import control.misc_funcs as misc
 
 
 conn = None
@@ -18,7 +20,8 @@ else:
 
 curr_user = conn.auth.get_session()
 if curr_user:
-    st.write(f"## Bem vindo(a), :blue[{curr_user.user.user_metadata["first_name"]}]!")
+    #### Flow if the user has already signed in
+    st.success(f"## Bem vindo(a), :blue[{curr_user.user.user_metadata["first_name"]}]!")
     with st.container(border=True):
         st.markdown("#### Prossiga para a próxima página ->")
 
@@ -27,9 +30,11 @@ if curr_user:
         _, _, nav_next_logged = st.columns([0.4,0.2,0.4], vertical_alignment='bottom')
         with nav_next_logged:
             st.page_link("views/dash.py", label="Avançar 	:arrow_right:",)
-
+        
+        # My clever way of setting up my custom footer
+        misc.write_footer()
 else:
-    #######
+    ####### Regular Login flow
     st.markdown("##	:bust_in_silhouette: :blue[Login de Usuário]")
 
     with st.container(border=True):
@@ -56,7 +61,10 @@ else:
                     _, _, nav_next = st.columns([0.4,0.2,0.4], vertical_alignment='bottom')
                     with nav_next:
                         st.page_link("views/dash.py", label="Avançar 	:arrow_right:",)
-                
+                    
+                    # My clever way of setting up my custom footer
+                    misc.write_footer()
+
             except AuthApiError as auth_error:
                 st.error("Erro ao tentar fazer login. Por favor, tente novamente.")
                 auth_error   
