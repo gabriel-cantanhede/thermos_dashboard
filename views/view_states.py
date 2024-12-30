@@ -188,4 +188,4 @@ try:
 
 except Exception as e:
     st.error("Falha ao recuperar dados do termômetro, tente logar novamente.")
-    misc.redirect_to_login(10)
+    # misc.redirect_to_login(10)
