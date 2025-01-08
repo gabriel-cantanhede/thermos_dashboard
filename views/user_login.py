@@ -15,8 +15,6 @@ if "__conn" not in st.session_state:
 else:
     conn = st.session_state['__conn']
 
-# if "ts_start" not in st.session_state.keys():
-#     st.session_state["ts_start"] = str(datetime.now(tz=timezone.utc))
 
 curr_user = conn.auth.get_session()
 if curr_user:
