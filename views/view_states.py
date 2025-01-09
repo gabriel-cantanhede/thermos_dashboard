@@ -159,14 +159,14 @@ try:
             ## Textual data - Positive Observations and Warnings
             col_pos, col_neg = st.columns([0.5, 0.5])
             with col_pos:
-                with st.container(border=True):
+                with st.container(border=True, height=200):
                     st.markdown("### :thumbsup: **:blue[Pontos Positivos]**:")
                     for index, row in df_textual_today.iterrows():
                         dict_ppos = eval(row['pontos_positivos'].replace('\\n', ' '))
                         f_string = f":blue-background[**Imprensa**: {dict_ppos['press']} <br>**Digital**: {dict_ppos['dig']}]"
                         st.markdown(f_string, unsafe_allow_html=True)
             with col_neg:
-                with st.container(border=True):
+                with st.container(border=True, height=200):
                     st.markdown("### :warning: **:orange[Pontos de Atenção]**: ")
                     for index, row in df_textual_today.iterrows():
                         dict_ppos = eval(row['pontos_atencao'].replace('\\n', ' '))
