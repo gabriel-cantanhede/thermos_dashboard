@@ -1,17 +1,7 @@
 import streamlit as st
 from datetime import datetime, timezone
+import control.db_connection as dbc
 import control.misc_funcs as misc
-
-# # My custom funcs and py files
-# import control.misc_funcs as misc
-# import control.db_connection as dbc
-
-# # Sanity check on the db connection object
-# if "__conn" not in st.session_state:
-#     conn = dbc.init_connection()
-#     st.session_state['__conn'] = conn
-# else:
-#     conn = st.session_state['__conn']
     
 
 st.markdown("# :thermometer: :blue[Bem-vindo ao Termômetro Reputacional Automático do Grupo Equatorial]")

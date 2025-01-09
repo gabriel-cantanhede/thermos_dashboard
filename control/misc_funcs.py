@@ -31,7 +31,7 @@ def write_footer(logo_style='blue'):
         unsafe_allow_html=True)
 
 
-def redirect_to_login(timer:int):
+def redirect_to_login(timer:int = 10):
     counter = st.empty()
     for secs in range(timer,0,-1):
         # mm, ss = secs//60, secs%60

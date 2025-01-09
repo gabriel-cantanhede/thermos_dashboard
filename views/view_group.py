@@ -6,8 +6,8 @@ import time
 import pandas as pd
 # from streamlit_extras.metric_cards import style_metric_cards
 ## My custom funcs and py files
-import control.misc_funcs as misc
 import control.db_connection as dbc
+import control.misc_funcs as misc
 
 # Sanity check on the db connection object
 conn = None
@@ -57,13 +57,13 @@ try:
         color_today_rep = misc.pick_color(today_rep/100)
 
         ## Favorability
-        today_fav = df_response_today[mask_selected_date]['favorabilidade'].mean()
-        yesterday_fav = df_response_yesterday[mask_previous_date]['favorabilidade'].mean()
+        today_fav = df_response_today['favorabilidade'].mean()
+        yesterday_fav = df_response_yesterday['favorabilidade'].mean()
         color_today_fav = misc.pick_color(today_fav/100)
 
         ## Saudability
-        today_saud = df_response_today[mask_selected_date]['saudabilidade'].mean()
-        yesterday_saud = df_response_yesterday[mask_previous_date]['saudabilidade'].mean()
+        today_saud = df_response_today['saudabilidade'].mean()
+        yesterday_saud = df_response_yesterday['saudabilidade'].mean()
         color_today_saud = misc.pick_color(today_saud/100)
 
         df_textual_today = df_response_today[['estado', 'pontos_positivos', 'pontos_atencao']].copy()
@@ -183,4 +183,4 @@ try:
 
 except Exception as e:
     st.error("Falha ao recuperar dados do termômetro, tente logar novamente.")
-    # misc.redirect_to_login(10)
+    misc.redirect_to_login()

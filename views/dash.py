@@ -4,11 +4,10 @@ import plotly.express as px
 import pandas as pd
 from datetime import datetime
 import time
-# from streamlit_extras.metric_cards import style_metric_cards
 
 # My custom funcs and py files
-import control.misc_funcs as misc
 import control.db_connection as dbc
+import control.misc_funcs as misc
 
 conn = None
 # Sanity check on the db connection object
@@ -19,26 +18,20 @@ else:
     conn = st.session_state['__conn']
 
 try:
-    # logged_user = conn.auth.get_user()
-    # st.write(logged_user.user.email) 
     
     # TODO Might incorporate a select box where the user chooses which data will be analyzed, and which date to look to (maybe)
     view_group_choice = 'reputacao_grupo_100dias'
     df_response = dbc.load_data(conn, view_group_choice)
-
-    # st.write(df_response)
 
     # Prepping tables and values to build visualizations
     df_big_numbers = df_response[['dia', 'favorabilidade', 'saudabilidade', 'reputacao']].copy()
 
     view_states_choice = 'reputacao_estados_100dias'
     df_response_states = dbc.load_data(conn, view_states_choice)
-    # df_big_numbers_states
 
     # Retrieving most recent day in the dataset
     current_day_in_data = df_big_numbers.iat[0,0].date()
     five_days_before_data = df_big_numbers.iat[4,0].date()
-    # current_day_in_data
 
     ### Daily Metrics ####
     ## Reputation
@@ -579,6 +572,6 @@ try:
 
 except Exception as e:
     st.error("Falha ao recuperar dados do termômetro, tente recarregar a página novamente.")
-    # misc.redirect_to_login(10)
-    # st.error(e)
+    misc.redirect_to_login()
+    st.error(e)
 
