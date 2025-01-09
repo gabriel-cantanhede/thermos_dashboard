@@ -156,14 +156,14 @@ try:
     col_pos, col_neg = st.columns([0.5, 0.5])
     with col_pos:
         # with stylable_container(key='positive_block', css_styles=styles_positive):
-        with st.container(border=True):
+        with st.container(border=True, height=500):
             st.markdown("### :thumbsup: **:blue[Pontos Positivos]**:")
             for index, row in df_textual_today.iterrows():
                 dict_ppos = eval(row['pontos_positivos'].replace('\\n', ' '))
                 f_string = f"- :blue-background[**{row['estado']} -** **_Imprensa_**: {dict_ppos['press']} | **_Digital_**: {dict_ppos['dig']}]"
                 st.write(f_string)
     with col_neg:
-        with st.container(border=True):
+        with st.container(border=True, height=500):
             st.markdown("### :warning: **:orange[Pontos de Atenção]**: ")
             for index, row in df_textual_today.iterrows():
                 dict_ppos = eval(row['pontos_atencao'].replace('\\n', ' '))
