@@ -4,14 +4,21 @@ from supabase.lib.client_options import ClientOptions
 import asyncio
 from datetime import datetime
 import pandas as pd
+from dotenv import load_dotenv
+from os import getenv
 
 
 # Initialize connection.
 # @st.cache_resource
 def init_connection():
     opts = ClientOptions().replace(schema="data_entry")
-    url = st.secrets["SUPABASE_URL"]
-    key = st.secrets["SUPABASE_KEY"]
+    load_dotenv()
+    try:
+        url = st.secrets["SUPABASE_URL"]
+        key = st.secrets["SUPABASE_KEY"]
+    except:
+        url = getenv("SUPABASE_URL")
+        key = getenv("SUPABASE_KEY")
     return create_client(url, key, options=opts)
 
 
