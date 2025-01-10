@@ -13,12 +13,12 @@ from os import getenv
 def init_connection():
     opts = ClientOptions().replace(schema="data_entry")
     load_dotenv()
-    try:
-        url = st.secrets["SUPABASE_URL"]
-        key = st.secrets["SUPABASE_KEY"]
-    except:
-        url = getenv("SUPABASE_URL")
-        key = getenv("SUPABASE_KEY")
+    # try:
+    #     url = st.secrets["SUPABASE_URL"]
+    #     key = st.secrets["SUPABASE_KEY"]
+    # except:
+    url = getenv("SUPABASE_URL")
+    key = getenv("SUPABASE_KEY")
     return create_client(url, key, options=opts)
 
 
