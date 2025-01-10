@@ -30,8 +30,10 @@ def write_footer(logo_style='blue'):
         <img src={img_link} alt='logo_eqtl' width=150px>""",
         unsafe_allow_html=True)
 
-
-def redirect_to_login(timer:int = 10):
+@st.dialog("Ops... Ocorreu um erro.")
+def redirect_to_login(error:Exception, timer:int = 10):
+    error_msg = f"Falha ao recuperar dados do termômetro, tente recarregar a página novamente. Mensagem de erro: {error}"
+    st.error(error_msg)
     counter = st.empty()
     for secs in range(timer,0,-1):
         # mm, ss = secs//60, secs%60

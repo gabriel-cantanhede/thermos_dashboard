@@ -182,5 +182,4 @@ try:
     misc.write_footer()
 
 except Exception as e:
-    st.error("Falha ao recuperar dados do termômetro, tente logar novamente.")
-    misc.redirect_to_login()
+    misc.redirect_to_login(error=e)
