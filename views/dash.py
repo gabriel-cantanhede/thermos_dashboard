@@ -22,6 +22,10 @@ try:
     # TODO Might incorporate a select box where the user chooses which data will be analyzed, and which date to look to (maybe)
     view_group_choice = 'reputacao_grupo_100dias'
     df_response = dbc.load_data(conn, view_group_choice)
+    # st.write(conn.auth.get_user())
+    # response = conn.table(view_group_choice).select('*').execute()
+    # st.write(response)
+    # st.write(df_response)
 
     # Prepping tables and values to build visualizations
     df_big_numbers = df_response[['dia', 'favorabilidade', 'saudabilidade', 'reputacao']].copy()

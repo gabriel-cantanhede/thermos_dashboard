@@ -42,7 +42,7 @@ def run_insert(_conn, _table_name, values):
 
 
 # Get data from a view in Supabase and return it as a DataFrame.
-@st.cache_data(ttl=600)
+# @st.cache_data(ttl=600)
 def load_data(_conn, view_name):
     response = _conn.table(view_name).select('*').execute()
     df_response = pd.DataFrame(response.data[:])

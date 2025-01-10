@@ -26,14 +26,13 @@ def write_footer(logo_style='blue'):
     st.markdown(
         f""":copyright: _Copyright 2024 - Time Inteligência de Dados_ <br>
         Gerência de Comunicação Externa, Marketing e Sustentabilidade <br>
-        Diretoria de Clientes, Serviços e Inovação <br> <br>
-        <img src={img_link} alt='logo_eqtl' width=150px>""",
+        Diretoria de Clientes, Inovação e Serviços <br> <br>
+        <img src={img_link} alt='logo_eqtl' width=200px>""",
         unsafe_allow_html=True)
 
 @st.dialog("Ops... Ocorreu um erro.")
-def redirect_to_login(error:str, timer:int = 10):
-    error_msg = f"Falha ao recuperar dados do termômetro, tente recarregar a página novamente. Mensagem de erro: {error}"
-    st.error(error_msg)
+def redirect_to_login(error:Exception, timer:int = 10):
+    st.error(f"Erro ao recuperar os dados do Termômetro. Mensagem de erro: {error}")
     counter_box = st.empty()
     for secs in range(timer,0,-1):
         # mm, ss = secs//60, secs%60
