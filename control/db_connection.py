@@ -17,8 +17,8 @@ def init_connection():
     #     url = st.secrets["SUPABASE_URL"]
     #     key = st.secrets["SUPABASE_KEY"]
     # except:
-    url = getenv("SUPABASE_URL")
-    key = getenv("SUPABASE_KEY")
+    url = getenv("SUPA_URL")
+    key = getenv("SUPA_KEY")
     return create_client(url, key, options=opts)
 
 
