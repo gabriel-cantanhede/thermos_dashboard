@@ -31,12 +31,12 @@ def write_footer(logo_style='blue'):
         unsafe_allow_html=True)
 
 @st.dialog("Ops... Ocorreu um erro.")
-def redirect_to_login(error:Exception, timer:int = 10):
+def redirect_to_login(error:str, timer:int = 10):
     error_msg = f"Falha ao recuperar dados do termômetro, tente recarregar a página novamente. Mensagem de erro: {error}"
     st.error(error_msg)
-    counter = st.empty()
+    counter_box = st.empty()
     for secs in range(timer,0,-1):
         # mm, ss = secs//60, secs%60
-        counter.info(f"#### Redirecionando para a página de login em {secs:02d}")
+        counter_box.info(f"# Redirecionando para a página de login em {secs:02d}")
         time.sleep(1)
     st.switch_page('views/user_login.py')
