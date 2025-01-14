@@ -185,4 +185,4 @@ try:
     misc.write_footer()
 
 except Exception as e:
-    misc.redirect_to_login(e)
+    misc.redirect_to_login(error=e)

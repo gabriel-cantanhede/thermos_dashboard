@@ -26,8 +26,8 @@ def write_footer(logo_style='blue'):
     st.markdown(
         f""":copyright: _Copyright 2024 - Time Inteligência de Dados_ <br>
         Gerência de Comunicação Externa, Marketing e Sustentabilidade <br>
-        Diretoria de Clientes, Inovação e Serviços <br> <br>
-        <img src={img_link} alt='logo_eqtl' width=200px>""",
+        Diretoria Corporativa de Clientes, Inovação e Serviços <br> <br>
+        <img src={img_link} alt='Logomarca do Grupo Equatorial' width=200px>""",
         unsafe_allow_html=True)
 
 @st.dialog("Ops... Ocorreu um erro.")

@@ -12,14 +12,15 @@ from os import getenv
 # @st.cache_resource
 def init_connection():
     opts = ClientOptions().replace(schema="data_entry")
-    load_dotenv()
-    # try:
-    #     url = st.secrets["SUPABASE_URL"]
-    #     key = st.secrets["SUPABASE_KEY"]
-    # except:
-    url = getenv("SUPA_URL")
-    key = getenv("SUPA_KEY")
-    return create_client(url, key, options=opts)
+    try:
+        load_dotenv()
+        url = getenv("SUPA_URL")
+        key = getenv("SUPA_KEY")
+        return create_client(url, key, options=opts)
+    except:
+        url = st.secrets["SUPABASE_URL"]
+        key = st.secrets["SUPABASE_KEY"]
+        return create_client(url, key, options=opts)
 
 
 async def log_in(_conn, credentials):
