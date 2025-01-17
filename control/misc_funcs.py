@@ -25,7 +25,7 @@ def write_footer(logo_style='blue'):
     st.divider()
     st.markdown(
         f""":copyright: _Copyright 2024 - Time Inteligência de Dados_ <br>
-        Gerência de Comunicação Externa, Marketing e Sustentabilidade <br>
+        Gerência Corporativa de Comunicação Externa e Marketing <br>
         Diretoria Corporativa de Clientes, Inovação e Serviços <br> <br>
         <img src={img_link} alt='Logomarca do Grupo Equatorial' width=200px>""",
         unsafe_allow_html=True)
