@@ -67,9 +67,9 @@ try:
     #### Header from the line graph
     name_viz = None
     if view_group_choice == 'reputacao_grupo_15dias':
-        name_viz = ":chart_with_upwards_trend: KPIs de Reputação (:blue[_últimos 15 dias_])" 
+        name_viz = ":chart_with_upwards_trend: Reputação do Grupo Equatorial (:blue[_últimos 15 dias_])" 
     else:
-        name_viz = ":chart_with_upwards_trend: KPIs de Reputação (:blue[_últimos 100 dias_])"    
+        name_viz = ":chart_with_upwards_trend: Reputação do Grupo Equatorial (:blue[_últimos 100 dias_])"    
     
     st.header(name_viz, divider='blue')
 
@@ -148,7 +148,7 @@ try:
             xaxis=dict(title_text="Dias", ticks="outside"),
             yaxis=dict(title_text="Desempenho (%)", ticks="outside"),
             title=dict(
-                    text='Desempenho dos Indicadores de Reputação do Grupo',
+                    text='Desempenho dos KPIs de Reputação',
                     automargin=True,
                     font=dict(color='darkblue', size=20),
                     x=0.45,
@@ -163,24 +163,24 @@ try:
             xaxis=dict(
                 rangeselector=dict(
                     buttons=list([
+                        dict(label="Tudo",
+                            step="all"),
                         dict(count=1,
-                            label="1 mês",
-                            step="month",
-                            stepmode="backward"),
+                             label="1 ano",
+                             step="year",
+                             stepmode="backward"),
                         dict(count=3,
                             label="3 meses",
+                            step="month",
+                            stepmode="backward"),
+                        dict(count=1,
+                            label="1 mês",
                             step="month",
                             stepmode="backward"),
                         # dict(count=1,
                         #      label="YTD",
                         #      step="year",
                         #      stepmode="todate"),
-                        dict(count=1,
-                             label="1 ano",
-                             step="year",
-                             stepmode="backward"),
-                        dict(label="Tudo",
-                            step="all")
                     ])
                 ),
                 # This is the bit that adds the bottom date range slicing widget
@@ -188,7 +188,8 @@ try:
                 # rangeslider=dict(
                 #     visible=True
                 # ),
-                type="date"
+                type="date",
+                
             ))
         # Reversing the trace order, for viz purposes
         # fig_line = fig_line.select_traces[:-1]
@@ -494,7 +495,7 @@ try:
                 barmode='stack', 
                 height = 500,
                 title=dict(
-                    text='Quantidade de Notícias na Imprensa',
+                    text='Total de Notícias - Imprensa',
                     automargin=True,
                     font=dict(color='darkblue', size=20),
                     x=0.5,
@@ -542,7 +543,7 @@ try:
                 barmode='stack', 
                 height = 500,
                 title=dict(
-                    text='Quantidade de Menções nas Mídias Digitais',
+                    text='Total de Menções - Digital',
                     automargin=True,
                     font=dict(color='darkblue', size=20),
                     x=0.5,

@@ -1,5 +1,6 @@
 import streamlit as st
 import time
+from datetime import datetime
 
 # def showProgressBar():
 #     progress_text = "Operação em progresso. Aguarde..."
@@ -24,7 +25,7 @@ def write_footer(logo_style='blue'):
     img_link = f"https://www.equatorialenergia.com.br/wp-content/themes/equatorial-energia-child/img/logo-{logo_style}.png"
     st.divider()
     st.markdown(
-        f""":copyright: _Copyright 2024 - Time Inteligência de Dados_ <br>
+        f""":copyright: _Copyright {datetime.now().year} - Time Inteligência de Dados_ <br>
         Gerência Corporativa de Comunicação Externa e Marketing <br>
         Diretoria Corporativa de Clientes, Inovação e Serviços <br> <br>
         <img src={img_link} alt='Logomarca do Grupo Equatorial' width=200px>""",
@@ -32,7 +33,7 @@ def write_footer(logo_style='blue'):
 
 @st.dialog("Ops... Ocorreu um erro.")
 def redirect_to_login(error:Exception, timer:int = 10):
-    st.error(f"Erro ao recuperar os dados do Termômetro. Mensagem de erro: {error}")
+    st.error(f"Erro ao recuperar os dados do Termômetro. Envie à equipe técnica a seguinte mensagem de erro: {error}")
     counter_box = st.empty()
     for secs in range(timer,0,-1):
         # mm, ss = secs//60, secs%60
