@@ -191,9 +191,7 @@ try:
                 type="date",
                 
             ))
-        # Reversing the trace order, for viz purposes
-        # fig_line = fig_line.select_traces[:-1]
-
+            
         st.plotly_chart(fig_line, key='overall_line_chart')
 
 
@@ -424,7 +422,7 @@ try:
                 xanchor='center',
                 yanchor='top',
                 ))
-        st.plotly_chart(fig_today_rep, key='week_rep_chart')
+        st.plotly_chart(fig_week_rep, key='week_rep_chart')
         st.markdown(f"_Obs.: Os indicadores acima são a média móvel da reputação do Grupo, levando em consideração os últimos \
              cinco dias úteis (referente ao período entre :blue[{five_days_before_data:%d/%m}] e :blue[{current_day_in_data:%d/%m/%y}])._")
 
