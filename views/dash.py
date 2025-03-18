@@ -97,7 +97,7 @@ try:
                     name='Favorabilidade',
                     mode='lines',
                     line=dict(color='#C30DE1', width=3, dash='solid'),
-                    legendgroup= 'group 1',
+                    legendgroup= 'group 2',
                     zorder=3,
                 ),
                 go.Scatter(
@@ -107,7 +107,7 @@ try:
                     name='Saudabilidade',
                     mode='lines',
                     line=dict(color='#7AE00B', width=3, dash='solid'),
-                    legendgroup= 'group 1',
+                    legendgroup= 'group 3',
                     zorder=2,
                 ),
                 go.Scatter(

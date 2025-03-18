@@ -48,8 +48,6 @@ try:
 
         df_response_today = df_response[mask_selected_date].copy()
         df_response_yesterday = df_response[mask_previous_date].copy()
-        # df_response_today
-        # df_response_yesterday
 
         ## Reputation
         today_rep = df_response_today['reputacao'].mean()
@@ -82,7 +80,7 @@ try:
             st.subheader(":newspaper: :blue[Imprensa]")
             f_string_press = """**{:.1f}% Favorabilidade** <br>:gray-background[{} Notícias] <br>:green-background[{} Positivas] <br>:red-background[{} Negativas]"""
             st.markdown(f_string_press.format(
-                df_response_today['favorabilidade'].mean(),
+                today_fav,
                 df_response_today['total_noticias'].sum(),
                 df_response_today['imprensa_positivas'].sum(),
                 df_response_today['imprensa_negativas'].sum(),
@@ -91,7 +89,7 @@ try:
             st.subheader(":iphone: :blue[Digital]")
             f_string_press = """**{:.1f}% Saudabilidade** <br>:gray-background[{} Menções] <br>:green-background[{} Positivas] <br>:orange-background[{} Neutras] <br>:red-background[{} Negativas]"""
             st.markdown(f_string_press.format(
-                df_response_today['saudabilidade'].mean(), 
+                today_saud, 
                 df_response_today['total_mencoes'].sum(), 
                 df_response_today['digital_positivas'].sum(), 
                 df_response_today['digital_neutras'].sum(), 

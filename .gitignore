@@ -19,6 +19,9 @@ venv.bak/
 # User Analysis
 .user_analysis
 
+# Data folters
+user_data
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
