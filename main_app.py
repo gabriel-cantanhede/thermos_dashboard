@@ -1,6 +1,7 @@
 import streamlit as st
 
-st.logo("https://www.equatorialenergia.com.br/wp-content/themes/equatorial-energia-child/img/logo-white.png", size='large')
+# st.logo("https://www.equatorialenergia.com.br/wp-content/themes/equatorial-energia-child/img/logo-white.png", size='large')
+st.logo("assets/logo_branco.png", size='large')
 
 st.set_page_config(
     page_title="Termômetro Reputacional Automatizado - Grupo Equatorial", 
